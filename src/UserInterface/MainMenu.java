@@ -103,9 +103,11 @@ public class MainMenu extends Menu
         else if( e.getSource() == creditsButton )
         {
         	Menu m = new CreditsMenu();
-        	String creditsText = "Four brilliant students worked on this project\n\n" +
+        	String creditsText = "\n(-(-_(-_-)_-)-)\n\n" +
+        						 "Four brilliant students worked on this project\n\n" +
         						 "- Rana Kösterit -\n- Süleyman Yasir Kula -\n" +
-        						 "- Esra Zeynep Kurt -\n- Tan Küçükoðlu -";
+        						 "- Esra Zeynep Kurt -\n- Tan Küçükoðlu -\n" +
+        						 "\n(>'.')>   <('.'<)";
         	( (CreditsMenu) m ).setCreditsText( creditsText );
         	MenuManager.instance.changeMenu( m );
         }

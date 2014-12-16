@@ -57,7 +57,7 @@ public class CreditsMenu extends Menu
         Font f = new Font( "Default", Font.PLAIN, 23 );
         textPane.setEditable( false );
         textPane.setBackground( new Color( 237, 237, 237 ) );
-        textPane.setForeground( Color.RED );
+        textPane.setForeground( Color.BLACK );
         textPane.setFont( f );
         
         // Center the text
