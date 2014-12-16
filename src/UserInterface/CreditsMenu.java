@@ -2,8 +2,11 @@ package UserInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -30,7 +33,11 @@ public class CreditsMenu extends Menu
 		BorderLayout layout = new BorderLayout( 0, 25 );
 		setLayout( layout );
 		
+		Dimension gap = new Dimension( 25, 25 );
+		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
+		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
 		add( scrollPane, BorderLayout.CENTER );
+		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_END );
 		add( backButton, BorderLayout.PAGE_END );
 		
 		setBackground( new Color( 255, 255, 255 ) );

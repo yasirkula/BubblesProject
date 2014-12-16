@@ -3,7 +3,6 @@ package UserInterface;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -66,10 +65,6 @@ public class EpisodeMenu extends Menu
         
         // Set colors and font
         Font f = new Font( "Default", Font.BOLD, 23 );
-        /*textPane.setEditable( false );
-        textPane.setBackground( new Color( 237, 237, 237 ) );
-        textPane.setForeground( Color.BLACK );
-        textPane.setFont( f );*/
         
         bioButton.setFont( f );
         chemButton.setFont( f );
@@ -94,19 +89,22 @@ public class EpisodeMenu extends Menu
 	{
 		if( e.getSource() == backButton )
 		{
-			MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
+			MenuManager.getInstance().changeMenu( new MainMenu() );
 		}
 		else if( e.getSource() == bioButton )
 		{
 			System.out.println( "BIOLOGY" );
+			MenuManager.getInstance().changeMenu( new LevelsMenu( 11, 4 ) );
 		}
 		else if( e.getSource() == chemButton )
 		{
 			System.out.println( "CHEMISTRY" );
+			MenuManager.getInstance().changeMenu( new LevelsMenu( 11, 7 ) );
 		}
 		else if( e.getSource() == vocabButton )
 		{
 			System.out.println( "VOCABULARY" );
+			MenuManager.getInstance().changeMenu( new LevelsMenu( 11, 11 ) );
 		}
 	}
 	// END OF OTHER METHODS
