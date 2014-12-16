@@ -117,7 +117,13 @@ public class MainMenu extends Menu
         }
         else if( e.getSource() == helpButton )
         {
-        	System.out.println( "5" );
+        	Menu m = new HelpMenu();
+        	String helpText = "\nSuch help document\n\n" +
+        						 "many content\n\n" +
+        						 "so helpful\n\n" +
+        						 "wow\n";
+        	( (HelpMenu) m ).setHelpText( helpText );
+        	MenuManager.instance.changeMenu( m );
         }
         else if( e.getSource() == exitButton )
         {
