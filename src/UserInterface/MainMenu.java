@@ -93,7 +93,8 @@ public class MainMenu extends Menu
 	{
         if( e.getSource() == newGameButton )
         {
-        	System.out.println( "1" );
+        	Menu m = new LevelsMenu(1, 1);
+        	MenuManager.instance.changeMenu( m );
         }
         else if( e.getSource() == settingsButton )
         {
