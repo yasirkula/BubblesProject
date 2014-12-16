@@ -93,7 +93,7 @@ public class MainMenu extends Menu
 	{
         if( e.getSource() == newGameButton )
         {
-        	System.out.println( "1" );
+        	MenuManager.getInstance().changeMenu( new EpisodeMenu() );
         }
         else if( e.getSource() == settingsButton )
         {
@@ -108,7 +108,7 @@ public class MainMenu extends Menu
         						 "- Esra Zeynep Kurt -\n- Tan Küçükoðlu -\n" +
         						 "\n(>'.')>   <('.'<)";
         	( (CreditsMenu) m ).setCreditsText( creditsText );
-        	MenuManager.instance.changeMenu( m );
+        	MenuManager.getInstance().changeMenu( m );
         }
         else if( e.getSource() == highscoresButton )
         {
@@ -122,11 +122,11 @@ public class MainMenu extends Menu
         						 "so helpful\n\n" +
         						 "wow\n";
         	( (HelpMenu) m ).setHelpText( helpText );
-        	MenuManager.instance.changeMenu( m );
+        	MenuManager.getInstance().changeMenu( m );
         }
         else if( e.getSource() == exitButton )
         {
-        	MenuManager.instance.exitGame();
+        	MenuManager.getInstance().exitGame();
         }
     } 
 	// END OF OTHER METHODS

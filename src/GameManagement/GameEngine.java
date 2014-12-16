@@ -18,7 +18,7 @@ public class GameEngine implements ActionListener
 	// END OF CONSTANTS
 	
 	// VARIABLES
-	public static GameEngine instance = null;
+	private static GameEngine instance = null;
 	
 	private Timer timer;
 	private int time;
@@ -34,13 +34,21 @@ public class GameEngine implements ActionListener
 	// CONSTRUCTORS
 	public GameEngine()
 	{
-		settings = MenuManager.instance.getSettings();
+		settings = MenuManager.getInstance().getSettings();
 		instance = this;
 		initializeEngine();
 	}
 	// END OF CONSTRUCTORS
 	
 	// MUTATOR - ACCESSOR METHODS
+	public static GameEngine getInstance()
+	{
+		if( instance == null )
+			instance = new GameEngine();
+		
+		return instance;
+	}
+	
 	public int getTime()
 	{
 		return time;

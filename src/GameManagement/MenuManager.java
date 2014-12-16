@@ -8,7 +8,7 @@ import UserInterface.Menu;
 public class MenuManager
 {
 	// VARIABLES
-	public static MenuManager instance = null;
+	private static MenuManager instance = null;
 	
 	private SettingsManager settings;
 	private GameEngine engine;
@@ -28,6 +28,14 @@ public class MenuManager
 	// END OF CONSTRUCTORS
 	
 	// MUTATOR - ACCESSOR METHODS
+	public static MenuManager getInstance()
+	{
+		if( instance == null )
+			instance = new MenuManager();
+		
+		return instance;
+	}
+	
 	public SettingsManager getSettings()
 	{
 		return settings;

@@ -78,7 +78,7 @@ public class HelpMenu extends Menu
 	public void actionPerformed( ActionEvent e ) 
 	{
 		if( e.getSource() == backButton )
-    		MenuManager.instance.changeMenu( (Menu) new MainMenu() );
+    		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
 	}
 	// END OF OTHER METHODS
 }

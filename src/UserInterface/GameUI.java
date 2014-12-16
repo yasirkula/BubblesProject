@@ -12,7 +12,7 @@ public class GameUI
 	// CONSTRUCTORS
 	public GameUI()
 	{
-		engine = GameEngine.instance;
+		engine = GameEngine.getInstance();
 	}
 	// END OF CONSTRUCTORS
 	
