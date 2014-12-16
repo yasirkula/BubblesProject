@@ -102,7 +102,12 @@ public class MainMenu extends Menu
         }
         else if( e.getSource() == creditsButton )
         {
-        	MenuManager.instance.changeMenu( (Menu) new CreditsMenu() );
+        	Menu m = new CreditsMenu();
+        	String creditsText = "Four brilliant students worked on this project\n\n" +
+        						 "- Rana Kösterit -\n- Süleyman Yasir Kula -\n" +
+        						 "- Esra Zeynep Kurt -\n- Tan Küçükoðlu -";
+        	( (CreditsMenu) m ).setCreditsText( creditsText );
+        	MenuManager.instance.changeMenu( m );
         }
         else if( e.getSource() == highscoresButton )
         {
