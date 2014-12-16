@@ -18,7 +18,6 @@ import GameManagement.MenuManager;
 public class HelpMenu extends Menu
 {
 	// VARIABLES
-	private String helpText;
 	private JButton backButton;
 	private JScrollPane scrollPane;
     private JTextPane textPane;
