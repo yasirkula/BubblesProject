@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -40,8 +41,8 @@ public class SettingsMenu extends Menu implements ChangeListener
 		setLayout( layout );
 
 		JPanel centerPanel = new JPanel();
-		JPanel centerTopPanel = new JPanel();
 		JPanel centerBottomPanel = new JPanel();
+		JPanel centerTopPanel = new JPanel();
 		JLabel bgColorLabel = new JLabel( "BACKGROUND COLOR", SwingConstants.CENTER );
 		JLabel soundLevelLabel = new JLabel( "SOUND LEVEL", SwingConstants.CENTER );
 		
@@ -51,20 +52,21 @@ public class SettingsMenu extends Menu implements ChangeListener
         soundLevelLabel.setFont( f );
         
 		GridLayout centerLayout = new GridLayout( 2, 1, 0, 25 );
-		BorderLayout centerTopLayout =  new BorderLayout( 0, 15 );
-		BorderLayout centerBottomLayout =  new BorderLayout();
+		BorderLayout centerTopLayout =  new BorderLayout();
+		BorderLayout centerBottomLayout =  new BorderLayout( 0, 15 );
 		
 		centerPanel.setLayout( centerLayout );
 		centerTopPanel.setLayout( centerTopLayout );
 		centerBottomPanel.setLayout( centerBottomLayout );
 		
-		centerTopPanel.add( bgColorLabel, BorderLayout.PAGE_START );
-		centerTopPanel.add( colorPicker, BorderLayout.CENTER );
-		centerBottomPanel.add( soundLevelLabel, BorderLayout.PAGE_START );
-		centerBottomPanel.add( soundLevel, BorderLayout.CENTER );
+		centerTopPanel.add( soundLevelLabel, BorderLayout.PAGE_START );
+		centerTopPanel.add( soundLevel, BorderLayout.CENTER );
+		centerTopPanel.add( new JSeparator(), BorderLayout.PAGE_END );
+		centerBottomPanel.add( bgColorLabel, BorderLayout.PAGE_START );
+		centerBottomPanel.add( colorPicker, BorderLayout.CENTER );
 		
-		centerPanel.add( centerBottomPanel );
 		centerPanel.add( centerTopPanel );
+		centerPanel.add( centerBottomPanel );
 		
 		centerPanel.setBorder( BorderFactory.createEtchedBorder( EtchedBorder.LOWERED ) );
 		
@@ -87,7 +89,8 @@ public class SettingsMenu extends Menu implements ChangeListener
 	{
 		// Initialize components
 		colorPicker = new JColorChooser( MenuManager.getInstance().getSettings().getBackgroundColor() );
-		soundLevel = new JSlider( JSlider.HORIZONTAL, 0, 100, 100 ); // min, max, initial
+		soundLevel = new JSlider( JSlider.HORIZONTAL, 0, 100, 
+				(int)( MenuManager.getInstance().getSettings().getSoundLevel() * 100 ) ); // min, max, initial
 		backButton = new JButton();
 		
 		colorPicker.setPreviewPanel( new JPanel() );
@@ -121,19 +124,22 @@ public class SettingsMenu extends Menu implements ChangeListener
 	public void actionPerformed( ActionEvent e ) 
 	{
 		if( e.getSource() == backButton )
+		{
+			// save settings and return to main menu
+			MenuManager.getInstance().getSettings().writeSettings();
     		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
+		}
 	}
 	
 	public void stateChanged( ChangeEvent e ) 
 	{
 		if( e.getSource() == soundLevel )
 		{
-			System.out.println( soundLevel.getValue() / 100f );
+			MenuManager.getInstance().getSettings().setSoundLevel( soundLevel.getValue() / 100f );
 		}
 		else if( e.getSource() == colorPicker.getSelectionModel() )
 		{
 			Color c = colorPicker.getColor();
-			System.out.println( c );
 			MenuManager.getInstance().getSettings().setBackgroundColor( c );
 			setBackground( c );
 		}
