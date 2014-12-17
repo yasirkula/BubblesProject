@@ -48,7 +48,7 @@ public class LevelsMenu extends Menu
 		
         setLayout( outerLayout );
 		middlePanel.setLayout( innerLayout );
-		middlePanel.setBackground( MenuManager.getInstance().getSettings().getBackgroundColor() );
+		middlePanel.setOpaque( false );
 		
 		for( JButton b : levelButtons )
 		{

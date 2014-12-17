@@ -1,6 +1,5 @@
 package Driver;
 
-import GameManagement.MenuManager;
 import UserInterface.MainMenu;
 
 import java.awt.Dimension;
@@ -15,7 +14,6 @@ public class Driver
 	public static void main( String[] args )
 	{
 		gameFrame = new JFrame( "BubblesProject" );
-		MenuManager menuManager = new MenuManager();
 		activePanel = (JPanel) new MainMenu();
 		gameFrame.add( activePanel );
 		gameFrame.setSize( new Dimension( 800, 600 ) );

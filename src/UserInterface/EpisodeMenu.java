@@ -34,7 +34,7 @@ public class EpisodeMenu extends Menu
 		
         setLayout( outerLayout );
 		middlePanel.setLayout( innerLayout );
-		middlePanel.setBackground( MenuManager.getInstance().getSettings().getBackgroundColor() );
+		middlePanel.setOpaque( false );
 		
 		middlePanel.add( bioButton );
 		middlePanel.add( chemButton );

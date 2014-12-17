@@ -4,7 +4,6 @@ import GameManagement.MenuManager;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 
@@ -102,8 +101,8 @@ public class MainMenu extends Menu
         	Menu m = new CreditsMenu();
         	String creditsText = "\n(-(-_(-_-)_-)-)\n\n" +
         						 "Four brilliant students worked on this project\n\n" +
-        						 "- Rana Kösterit -\n- Süleyman Yasir Kula -\n" +
-        						 "- Esra Zeynep Kurt -\n- Tan Küçükoðlu -\n" +
+        						 "Esra Zeynep Kurt / 21101384\nRana Kösterit / 21100715\n" +
+        						 "Süleyman Yasir Kula / 21200823\nTan Küçükoðlu / 21201893\n" +
         						 "\n(>'.')>   <('.'<)";
         	( (CreditsMenu) m ).setCreditsText( creditsText );
         	MenuManager.getInstance().changeMenu( m );
