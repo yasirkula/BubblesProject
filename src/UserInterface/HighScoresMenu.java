@@ -4,13 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
@@ -28,9 +26,7 @@ public class HighScoresMenu extends Menu
 	private JButton chemScoresButton;
 	private JButton vocabScoresButton;
 	private JScrollPane scrollPane;
-    private JTextPane textPaneBio;
-    private JTextPane textPaneChem;
-    private JTextPane textPaneVocab;
+    private JTextPane textPane;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
@@ -38,33 +34,19 @@ public class HighScoresMenu extends Menu
 	{
 		super();
 		
-		BorderLayout outerLayout = new BorderLayout( 0, 25 );
-		GridLayout midLayout = new GridLayout( 1, 3 );
-		GridLayout bottomLayout = new GridLayout( 1, 2);
-		
-		JPanel midPanel = new JPanel();
-		JPanel lowerPanel = new JPanel();
-		
-		setLayout( outerLayout );
-		midPanel.setLayout( midLayout );
-		midPanel.setOpaque( false );
-		lowerPanel.setLayout( bottomLayout );
-		lowerPanel.setOpaque( false );
-		
-		midPanel.add( bioScoresButton );
-		midPanel.add( chemScoresButton );
-		midPanel.add( vocabScoresButton );
-		
-		lowerPanel.add( resetButton );
-		lowerPanel.add( backButton );
+		BorderLayout layout = new BorderLayout( 0, 25 );
+		setLayout( layout );
 		
 		Dimension gap = new Dimension( 25, 25 );
-		//add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
-		//add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
-		add( midPanel, BorderLayout.NORTH );
+		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
+		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
+		//add( bioScoresButton, BorderLayout.PAGE_END);
+		//add( chemScoresButton, BorderLayout.NORTH);
+		//add( vocabScoresButton, BorderLayout.NORTH);
 		add( scrollPane, BorderLayout.CENTER );
-		add( lowerPanel, BorderLayout.SOUTH );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_END );
+		//add( resetButton, BorderLayout.PAGE_END);
+		add( backButton, BorderLayout.PAGE_END );
 	}
 	// END OF CONSTRUCTORS
 	
@@ -81,36 +63,22 @@ public class HighScoresMenu extends Menu
         chemScoresButton = new JButton( "Chemistry Scores" );
         vocabScoresButton = new JButton( "Vocabulary Scores" );
         scrollPane = new JScrollPane();
-        textPaneBio = new JTextPane();
-        textPaneChem = new JTextPane();
-        textPaneVocab = new JTextPane();
-        
-        textPaneBio.setText( "bio" );
-        textPaneChem.setText( "chem" );
-        textPaneVocab.setText( "vocab" );        
+        textPane = new JTextPane();
         
         // Set colors and font
         Font f = new Font( "Default", Font.PLAIN, 23 );
-        textPaneBio.setEditable( false );
-        textPaneBio.setBackground( new Color( 237, 237, 237 ) );
-        textPaneBio.setForeground( Color.BLACK );
-        textPaneBio.setFont( f );
-        textPaneChem.setEditable( false );
-        textPaneChem.setBackground( new Color( 237, 237, 237 ) );
-        textPaneChem.setForeground( Color.BLACK );
-        textPaneChem.setFont( f );
-        textPaneVocab.setEditable( false );
-        textPaneVocab.setBackground( new Color( 237, 237, 237 ) );
-        textPaneVocab.setForeground( Color.BLACK );
-        textPaneVocab.setFont( f );
+        textPane.setEditable( false );
+        textPane.setBackground( new Color( 237, 237, 237 ) );
+        textPane.setForeground( Color.BLACK );
+        textPane.setFont( f );
         
         // Center the text
-        StyledDocument doc = textPaneBio.getStyledDocument();
+        StyledDocument doc = textPane.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		StyleConstants.setAlignment( center, StyleConstants.ALIGN_CENTER );
 		doc.setParagraphAttributes( 0, doc.getLength(), center, false );
 		
-        scrollPane.setViewportView( textPaneBio );
+        scrollPane.setViewportView( textPane );
 
         backButton.setIcon( new ImageIcon( getClass().getResource("/images/BackButton.png") ) );
         backButton.setBorderPainted( false );
@@ -140,33 +108,6 @@ public class HighScoresMenu extends Menu
 	{
 		if( e.getSource() == backButton )
     		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
-		else if( e.getSource() == resetButton ) 
-		{
-			
-		}
-		else if( e.getSource() == bioScoresButton )
-		{
-			scrollPane.setViewportView( textPaneBio );
-		}
-		else if( e.getSource() == chemScoresButton )
-		{
-			StyledDocument doc2 = textPaneChem.getStyledDocument();
-			SimpleAttributeSet center2 = new SimpleAttributeSet();
-			StyleConstants.setAlignment( center2, StyleConstants.ALIGN_CENTER );
-			doc2.setParagraphAttributes( 0, doc2.getLength(), center2, false );
-			
-			scrollPane.setViewportView( textPaneChem );
-		}
-		else if( e.getSource() == vocabScoresButton )
-		{
-			StyledDocument doc3 = textPaneVocab.getStyledDocument();
-			SimpleAttributeSet center3 = new SimpleAttributeSet();
-			StyleConstants.setAlignment( center3, StyleConstants.ALIGN_CENTER );
-			doc3.setParagraphAttributes( 0, doc3.getLength(), center3, false );
-			
-			scrollPane.setViewportView( textPaneVocab );
-		}
-			
 	}
 	// END OF OTHER METHODS
 }
