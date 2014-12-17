@@ -17,7 +17,8 @@ public class BubbleCollection
 	// CONSTRUCTORS
 	public BubbleCollection()
 	{
-	
+		// Fetch all the bubble data from the disk
+		loadBubbles();
 	}
 	// END OF CONSTRUCTORS
 	
@@ -27,7 +28,19 @@ public class BubbleCollection
 	// OTHER METHODS
 	public void loadBubbles()
 	{
+		// Load the bubble data from the disk
+		bioBubbles = new ArrayList<Bubble>();
+		bioMatchBubbles = new ArrayList<Bubble>();
+		chemBubbles = new ArrayList<Bubble>();
+		chemMatchBubbles = new ArrayList<Bubble>();
+		vocabBubbles = new ArrayList<Bubble>();
+		vocabMatchBubbles = new ArrayList<Bubble>();
+	}
 	
+	public void getVocabBubbles( String episode, int size, 
+			ArrayList<Bubble> bubbles, ArrayList<Bubble> matchBubbles )
+	{
+		
 	}
 	// END OF OTHER METHODS
 }
