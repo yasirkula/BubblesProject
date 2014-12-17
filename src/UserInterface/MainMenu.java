@@ -109,7 +109,8 @@ public class MainMenu extends Menu
         }
         else if( e.getSource() == highscoresButton )
         {
-        	System.out.println( "4" );
+        	Menu m = new HighScoresMenu();
+        	MenuManager.getInstance().changeMenu( m );
         }
         else if( e.getSource() == helpButton )
         {
