@@ -3,6 +3,8 @@ package UserInterface;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
+import GameManagement.MenuManager;
+
 public abstract class Menu extends JPanel implements ActionListener
 {
 	// VARIABLES
@@ -12,6 +14,8 @@ public abstract class Menu extends JPanel implements ActionListener
 	public Menu()
 	{
 		initComponents();
+		
+		setBackground( MenuManager.getInstance().getSettings().getBackgroundColor() );
 	}
 	// END OF CONSTRUCTORS
 	

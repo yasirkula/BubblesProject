@@ -14,7 +14,7 @@ public class Driver
 	
 	public static void main( String[] args )
 	{
-		gameFrame = new JFrame();
+		gameFrame = new JFrame( "BubblesProject" );
 		MenuManager menuManager = new MenuManager();
 		activePanel = (JPanel) new MainMenu();
 		gameFrame.add( activePanel );

@@ -48,7 +48,7 @@ public class LevelsMenu extends Menu
 		
         setLayout( outerLayout );
 		middlePanel.setLayout( innerLayout );
-		middlePanel.setBackground( new Color( 255, 255, 255 ) );
+		middlePanel.setBackground( MenuManager.getInstance().getSettings().getBackgroundColor() );
 		
 		for( JButton b : levelButtons )
 		{
@@ -61,8 +61,6 @@ public class LevelsMenu extends Menu
 		add( middlePanel, BorderLayout.CENTER );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_END );
 		add( backButton, BorderLayout.PAGE_END );
-		
-		setBackground( new Color( 255, 255, 255 ) );
 	}
 	// END OF CONSTRUCTORS
 	

@@ -39,8 +39,6 @@ public class CreditsMenu extends Menu
 		add( scrollPane, BorderLayout.CENTER );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_END );
 		add( backButton, BorderLayout.PAGE_END );
-		
-		setBackground( new Color( 255, 255, 255 ) );
 	}
 	// END OF CONSTRUCTORS
 	

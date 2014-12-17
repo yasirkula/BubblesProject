@@ -39,8 +39,6 @@ public class HelpMenu extends Menu
 		add( scrollPane, BorderLayout.CENTER );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_END );
 		add( backButton, BorderLayout.PAGE_END );
-		
-		setBackground( new Color( 255, 255, 255 ) );
 	}
 	// END OF CONSTRUCTORS
 	
@@ -81,6 +79,7 @@ public class HelpMenu extends Menu
         backButton.setFocusPainted( false );
         backButton.addActionListener( this );
 	}
+	
 	public void actionPerformed( ActionEvent e ) 
 	{
 		if( e.getSource() == backButton )

@@ -33,8 +33,6 @@ public class MainMenu extends Menu
 		add( highscoresButton );
 		add( helpButton );
 		add( exitButton );
-		
-		setBackground( new Color( 255, 255, 255 ) );
 	}
 	// END OF CONSTRUCTORS
 	
@@ -97,7 +95,7 @@ public class MainMenu extends Menu
         }
         else if( e.getSource() == settingsButton )
         {
-        	System.out.println( "2" );
+        	MenuManager.getInstance().changeMenu( new SettingsMenu() );
         }
         else if( e.getSource() == creditsButton )
         {
