@@ -29,7 +29,7 @@ public abstract class Menu extends JPanel implements ActionListener
 		// Gradient background
 		// Inspired from: http://stackoverflow.com/questions/12220853/how
 		//				  -to-make-the-background-gradient-of-a-jpanel
-		// a written answer by: trashgod
+		// answered by: trashgod
 		super.paintComponent( g );
         Graphics2D g2d = ( Graphics2D ) g;
         Color colorTop = getBackground();
@@ -38,6 +38,7 @@ public abstract class Menu extends JPanel implements ActionListener
         g2d.setPaint( gra );
         g2d.fillRect( 0, 0, getWidth(), getHeight() );
 	}
+	
 	protected abstract void initComponents(); 
 	// END OF OTHER METHODS
 }

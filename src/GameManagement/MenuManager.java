@@ -7,13 +7,16 @@ import UserInterface.Menu;
 
 public class MenuManager
 {
+	// CONSTANTS
+	public static final int LEVEL_COUNT = 10;
+	// END OF CONSTANTS
+	
 	// VARIABLES
 	private static MenuManager instance = null;
 	
 	private SettingsManager settings;
 	private GameEngine engine;
 	private HighScores scores;
-	private String selectedEpisode;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
@@ -23,7 +26,6 @@ public class MenuManager
 		
 		settings = new SettingsManager();
 		scores = new HighScores();
-		selectedEpisode = null;
 	}
 	// END OF CONSTRUCTORS
 	

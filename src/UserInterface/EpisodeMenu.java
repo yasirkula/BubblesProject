@@ -91,18 +91,18 @@ public class EpisodeMenu extends Menu
 		}
 		else if( e.getSource() == bioButton )
 		{
-			System.out.println( "BIOLOGY" );
-			MenuManager.getInstance().changeMenu( new LevelsMenu( 11, 4 ) );
+			MenuManager.getInstance().changeMenu( 
+					new LevelsMenu( "Biology", MenuManager.LEVEL_COUNT, 4 ) );
 		}
 		else if( e.getSource() == chemButton )
 		{
-			System.out.println( "CHEMISTRY" );
-			MenuManager.getInstance().changeMenu( new LevelsMenu( 11, 7 ) );
+			MenuManager.getInstance().changeMenu( 
+					new LevelsMenu( "Chemistry", MenuManager.LEVEL_COUNT, 7 ) );
 		}
 		else if( e.getSource() == vocabButton )
 		{
-			System.out.println( "VOCABULARY" );
-			MenuManager.getInstance().changeMenu( new LevelsMenu( 11, 11 ) );
+			MenuManager.getInstance().changeMenu( 
+					new LevelsMenu( "Vocabulary", MenuManager.LEVEL_COUNT, MenuManager.LEVEL_COUNT ) );
 		}
 	}
 	// END OF OTHER METHODS

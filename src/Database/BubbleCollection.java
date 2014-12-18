@@ -2,6 +2,7 @@ package Database;
 
 import java.util.ArrayList;
 import GameAssets.Bubble;
+import GameAssets.TextContent;
 
 public class BubbleCollection
 {
@@ -35,12 +36,27 @@ public class BubbleCollection
 		chemMatchBubbles = new ArrayList<Bubble>();
 		vocabBubbles = new ArrayList<Bubble>();
 		vocabMatchBubbles = new ArrayList<Bubble>();
+		
+		vocabBubbles.add( new Bubble( new TextContent( "Good" ) ) );
+		vocabMatchBubbles.add( new Bubble( new TextContent( "Bad" ) ) );
+		vocabBubbles.add( new Bubble( new TextContent( "Early" ) ) );
+		vocabMatchBubbles.add( new Bubble( new TextContent( "Late" ) ) );
+		vocabBubbles.add( new Bubble( new TextContent( "Big" ) ) );
+		vocabMatchBubbles.add( new Bubble( new TextContent( "Small" ) ) );
+		vocabBubbles.add( new Bubble( new TextContent( "Left" ) ) );
+		vocabMatchBubbles.add( new Bubble( new TextContent( "Right" ) ) );
 	}
 	
-	public void getVocabBubbles( String episode, int size, 
-			ArrayList<Bubble> bubbles, ArrayList<Bubble> matchBubbles )
+	public void getVocabBubbles( int size, int trapBubblesSize,
+										   ArrayList<Bubble> bubbles, 
+										   ArrayList<Bubble> matchBubbles,
+										   ArrayList<Bubble> trapBubbles )
 	{
-		
+		for( int i = 0; i < vocabBubbles.size(); i++ )
+		{
+			bubbles.add( vocabBubbles.get( i ) );
+			matchBubbles.add( vocabMatchBubbles.get( i ) );
+		}
 	}
 	// END OF OTHER METHODS
 }

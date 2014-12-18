@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
 public class LevelsMenu extends Menu
@@ -21,19 +22,22 @@ public class LevelsMenu extends Menu
 	// END OF CONSTANTS
 	
 	// VARIABLES
+	private ArrayList<JButton> levelButtons;
+    private JButton backButton;
+    
 	private int levelsCount = 0;
 	private int unlockedLevels = 0;          
-    private ArrayList<JButton> levelButtons;
-    private JButton backButton;
+    private String episode;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
-	public LevelsMenu( int count, int unlocked )
+	public LevelsMenu( String episode, int count, int unlocked )
 	{
 		super();
 		
 		levelsCount = count;
 		unlockedLevels = unlocked;
+		this.episode = episode;
 		
 		initComponents();
 		
@@ -121,9 +125,13 @@ public class LevelsMenu extends Menu
         	if( i != levelButtons.size() )
         	{
         		if( i < unlockedLevels )
-        			System.out.println( "Clicked Level " + ( i + 1 ) );
+        		{
+        			GameEngine.getInstance().initializeLevel( episode, i + 1 );
+        		}
         		else
-        			System.out.println( "Clicked LOCKED Level " + ( i + 1 ) );
+        		{
+        			
+        		}
         	}
         }
     } 

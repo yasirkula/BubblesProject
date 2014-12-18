@@ -20,7 +20,7 @@ public class ImageContent implements Content
 	// END OF MUTATOR - ACCESSOR METHODS
 	
 	// OTHER METHODS
-	public void draw( Graphics g )
+	public void draw( Graphics g, Bubble b )
 	{
 	
 	}

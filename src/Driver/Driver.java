@@ -16,7 +16,8 @@ public class Driver
 		gameFrame = new JFrame( "BubblesProject" );
 		activePanel = (JPanel) new MainMenu();
 		gameFrame.add( activePanel );
-		gameFrame.setSize( new Dimension( 800, 600 ) );
+		gameFrame.setMinimumSize( new Dimension( 1024, 640 ) );
+		gameFrame.setSize( new Dimension( 1024, 768 ) );
 		gameFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		gameFrame.setVisible( true );		
 	}
@@ -28,5 +29,15 @@ public class Driver
 		gameFrame.add( activePanel );
 		gameFrame.validate();
 		gameFrame.repaint();
+	}
+	
+	public static int getFrameWidth()
+	{
+		return gameFrame.getWidth();
+	}
+	
+	public static int getFrameHeight()
+	{
+		return gameFrame.getHeight();
 	}
 }
