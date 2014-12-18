@@ -18,6 +18,7 @@ public class PauseMenu extends Menu
 {
 	// VARIABLES
 	private JButton resumeButton;
+	private JButton restartButton;
 	private JButton helpButton;
 	private JButton exitButton;
 	// END OF VARIABLES
@@ -28,7 +29,7 @@ public class PauseMenu extends Menu
 		super();
 		
 		BorderLayout outerLayout = new BorderLayout();
-        GridLayout innerLayout = new GridLayout( 3, 1, 0, 50 );
+        GridLayout innerLayout = new GridLayout( 4, 1, 0, 40 );
         JPanel middlePanel = new JPanel();
 		
         setLayout( outerLayout );
@@ -36,6 +37,7 @@ public class PauseMenu extends Menu
 		middlePanel.setOpaque( false );
 		
 		middlePanel.add( resumeButton );
+		middlePanel.add( restartButton );
 		middlePanel.add( helpButton );
 		middlePanel.add( exitButton );
 		
@@ -56,6 +58,7 @@ public class PauseMenu extends Menu
 	{
 		// Initialize components
 		resumeButton = new JButton( "RESUME" );
+		restartButton = new JButton( "RESTART" );
 		helpButton = new JButton( "HELP" );
 		exitButton = new JButton( "EXIT" );
         
@@ -63,14 +66,17 @@ public class PauseMenu extends Menu
         Font f = new Font( "Default", Font.BOLD, 23 );
         
         resumeButton.setFont( f );
+        restartButton.setFont( f );
         helpButton.setFont( f );
         exitButton.setFont( f );
         
         resumeButton.setBackground( new Color( 125, 189, 102 ) );
+        restartButton.setBackground( new Color( 251, 245, 136 ) );
         helpButton.setBackground( new Color( 117, 158, 236 ) );
         exitButton.setBackground( new Color( 234, 106, 113 ) );
         
         resumeButton.addActionListener( this );
+        restartButton.addActionListener( this );
         helpButton.addActionListener( this );
         exitButton.addActionListener( this );
 	}
@@ -80,6 +86,11 @@ public class PauseMenu extends Menu
 		if( e.getSource() == resumeButton )
 		{
 			GameEngine.getInstance().resume();
+		}
+		else if( e.getSource() == restartButton )
+		{
+			GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(),
+					GameEngine.getInstance().getLevelID() );
 		}
 		else if( e.getSource() == helpButton )
 		{

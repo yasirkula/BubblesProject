@@ -78,7 +78,7 @@ public class BubbleCollection
 		    while( ( line = buffer.readLine() ) != null ) 
 		    {
 		        String[] tokens = line.split( " " );
-		        System.out.println( tokens );
+
 	        	try
 	        	{
 	        		Bubble b = new Bubble( getContent( ContentType.IMAGE ) );
