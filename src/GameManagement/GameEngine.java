@@ -293,7 +293,6 @@ public class GameEngine implements ActionListener, MouseListener
 	public void gameWon()
 	{
 		// There is no valid bubble left on the screen, game is won
-		System.out.println( "WON" );
 		timer.stop();
 		
 		// increment the score proportional to remaining time
@@ -305,7 +304,6 @@ public class GameEngine implements ActionListener, MouseListener
 	public void gameLost()
 	{
 		// Timer reached 0, game is lost
-		System.out.println( "LOST" );
 		timer.stop();
 		
 		MenuManager.getInstance().changeMenu( new LevelLostMenu() );

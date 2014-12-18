@@ -1,11 +1,15 @@
 /*
- * Animal images taken from:
+ * Animal images are taken from:
  * http://www.animalcorner.co.uk
- * 
  */
 
 package Database;
 
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import GameAssets.Bubble;
@@ -51,6 +55,58 @@ public class BubbleCollection
 		vocabBubbles = new ArrayList<Bubble>();
 		vocabMatchBubbles = new ArrayList<Bubble>();
 		
+		/****
+		 * 
+		 * 
+		 */
+
+		// Inspired from http://docs.oracle.com/javase/tutorial/essential/io/file.html
+		// and
+		// http://stackoverflow.com/questions/14918188/reading
+		// -text-file-with-utf-8-encoding-using-java
+		// answered by: Shobit Sharma
+		
+		// Fetch biology bubble data from the disk
+		BufferedReader buffer = null;
+		
+		try
+		{
+			buffer = new BufferedReader( new InputStreamReader( 
+					new FileInputStream( "dataBiology.dat" ), "UTF-8" ) );
+		    
+			String line = null;
+		    while( ( line = buffer.readLine() ) != null ) 
+		    {
+		        String[] tokens = line.split( " " );
+		        System.out.println( tokens );
+	        	try
+	        	{
+	        		Bubble b = new Bubble( getContent( ContentType.IMAGE ) );
+	    			( (ImageContent) b.getContent() ).setImage( tokens[1] );
+	    			bioBubbles.add( b );
+	    			
+	    			b = new Bubble( getContent( ContentType.TEXT ) );
+	    			( (TextContent) b.getContent() ).setText( tokens[0] );
+	    			bioMatchBubbles.add( b );
+	        	}
+	        	catch( Exception e ){}
+		    }
+		} 
+		catch( IOException x ){}
+		finally 
+		{
+		   try 
+		   {
+			   buffer.close();
+		   } 
+		   catch( Exception ex ){}
+		}
+		
+		/****
+		 * 
+		 * 
+		 */
+		
 		for( int i = 0; i < 4; i++ )
 		{
 			Bubble b = new Bubble( getContent( ContentType.TEXT ) );
@@ -93,49 +149,6 @@ public class BubbleCollection
 			( (TextContent) b.getContent() ).setText( "Çirkin" );
 			vocabMatchBubbles.add( b );
 		}
-		
-		for( int i = 0; i < 4; i++ )
-		{
-			Bubble b = new Bubble( getContent( ContentType.IMAGE ) );
-			( (ImageContent) b.getContent() ).setImage( "/images/biology/dog.png" );
-			bioBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Dog" );
-			bioMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.IMAGE ) );
-			( (ImageContent) b.getContent() ).setImage( "/images/biology/tiger.png" );
-			bioBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Tiger" );
-			bioMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.IMAGE ) );
-			( (ImageContent) b.getContent() ).setImage( "/images/biology/mouse.png" );
-			bioBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Mouse" );
-			bioMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.IMAGE ) );
-			( (ImageContent) b.getContent() ).setImage( "/images/biology/cat.png" );
-			bioBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Cat" );
-			bioMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.IMAGE ) );
-			( (ImageContent) b.getContent() ).setImage( "/images/biology/hamster.png" );
-			bioBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Hamster" );
-			bioMatchBubbles.add( b );
-		}
 	}
 	
 	public void getVocabBubbles( int size, int trapBubblesSize,
@@ -155,7 +168,7 @@ public class BubbleCollection
 			   ArrayList<Bubble> matchBubbles,
 			   ArrayList<Bubble> trapBubbles )
 	{
-		for( int i = 0; i < bioBubbles.size(); i++ )
+		for( int i = 0; i < 20; i++ )
 		{
 			bubbles.add( bioBubbles.get( i ) );
 			matchBubbles.add( bioMatchBubbles.get( i ) );
