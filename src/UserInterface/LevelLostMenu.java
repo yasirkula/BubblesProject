@@ -7,36 +7,46 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
-public class PauseMenu extends Menu
+public class LevelLostMenu extends Menu
 {
 	// VARIABLES
-	private JButton resumeButton;
-	private JButton helpButton;
+	private JButton restartButton;
 	private JButton exitButton;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
-	public PauseMenu()
+	public LevelLostMenu()
 	{
 		super();
 		
 		BorderLayout outerLayout = new BorderLayout();
         GridLayout innerLayout = new GridLayout( 3, 1, 0, 50 );
         JPanel middlePanel = new JPanel();
-		
+        
+        JTextField levelLostText = new JTextField( "Time's Up!" );
+        Font f = new Font( "Default", Font.BOLD , 45 );
+        levelLostText.setEditable( false );
+        levelLostText.setBorder( BorderFactory.createLineBorder( Color.BLACK, 5 ) );
+        levelLostText.setBackground( new Color( 208, 214, 5 ) );
+        levelLostText.setForeground( Color.BLACK );
+        levelLostText.setFont( f );
+        levelLostText.setHorizontalAlignment( JTextField.CENTER );
+        
         setLayout( outerLayout );
 		middlePanel.setLayout( innerLayout );
 		middlePanel.setOpaque( false );
 		
-		middlePanel.add( resumeButton );
-		middlePanel.add( helpButton );
+		middlePanel.add( levelLostText );
+		middlePanel.add( restartButton );
 		middlePanel.add( exitButton );
 		
 		Dimension gap = new Dimension( 250, 50 );
@@ -55,35 +65,28 @@ public class PauseMenu extends Menu
 	protected void initComponents()
 	{
 		// Initialize components
-		resumeButton = new JButton( "RESUME" );
-		helpButton = new JButton( "HELP" );
+		restartButton = new JButton( "RESTART LEVEL" );
 		exitButton = new JButton( "EXIT" );
         
         // Set colors and font
         Font f = new Font( "Default", Font.BOLD, 23 );
         
-        resumeButton.setFont( f );
-        helpButton.setFont( f );
+        restartButton.setFont( f );
         exitButton.setFont( f );
         
-        resumeButton.setBackground( new Color( 125, 189, 102 ) );
-        helpButton.setBackground( new Color( 117, 158, 236 ) );
+        restartButton.setBackground( new Color( 125, 189, 102 ) );
         exitButton.setBackground( new Color( 234, 106, 113 ) );
         
-        resumeButton.addActionListener( this );
-        helpButton.addActionListener( this );
+        restartButton.addActionListener( this );
         exitButton.addActionListener( this );
 	}
 	
 	public void actionPerformed( ActionEvent e )
 	{
-		if( e.getSource() == resumeButton )
+		if( e.getSource() == restartButton )
 		{
-			GameEngine.getInstance().resume();
-		}
-		else if( e.getSource() == helpButton )
-		{
-			MenuManager.getInstance().changeMenu( new HelpMenu( true ) );
+			GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(), 
+					GameEngine.getInstance().getLevelID() );
 		}
 		else if( e.getSource() == exitButton )
 		{

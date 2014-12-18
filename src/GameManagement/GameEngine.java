@@ -13,6 +13,9 @@ import Database.SettingsManager;
 import Database.BubbleCollection;
 import Driver.Driver;
 import UserInterface.GameUI;
+import UserInterface.LevelCompleteMenu;
+import UserInterface.LevelLostMenu;
+import UserInterface.PauseMenu;
 
 public class GameEngine implements ActionListener, MouseListener
 {
@@ -30,6 +33,8 @@ public class GameEngine implements ActionListener, MouseListener
 	private Timer timer;
 	private int time;
 	private int score;
+	private int levelID;
+	private String episode;
 	private ArrayList<Bubble> bubbles;
 	private ArrayList<Bubble> matchingBubbles;
 	private ArrayList<Bubble> trapBubbles;
@@ -65,6 +70,16 @@ public class GameEngine implements ActionListener, MouseListener
 	public int getScore()
 	{
 		return score;
+	}
+	
+	public int getLevelID()
+	{
+		return levelID;
+	}
+	
+	public String getEpisode()
+	{
+		return episode;
 	}
 	
 	public SettingsManager getSettings()
@@ -113,6 +128,9 @@ public class GameEngine implements ActionListener, MouseListener
 		time = INITIAL_TIME;
 		score = 0;
 		selectedBubble = null;
+		this.levelID = levelID;
+		this.episode = episode;
+		
 		UI = new GameUI();
 		UI.addMouseListener( this );
 		Driver.changeActivePanel( UI );
@@ -124,6 +142,12 @@ public class GameEngine implements ActionListener, MouseListener
 		if( episode.equalsIgnoreCase( "Vocabulary" ) )
 		{
 			bubbleCollection.getVocabBubbles( MINIMUM_BUBBLES + levelID - 1, 
+					MINIMUM_TRAP_BUBBLES + levelID - 1, // levelID starts from 1, not 0!
+					bubbles, matchingBubbles, trapBubbles );
+		}
+		else if( episode.equalsIgnoreCase( "Biology" ) )
+		{
+			bubbleCollection.getBioBubbles( MINIMUM_BUBBLES + levelID - 1, 
 					MINIMUM_TRAP_BUBBLES + levelID - 1, // levelID starts from 1, not 0!
 					bubbles, matchingBubbles, trapBubbles );
 		}
@@ -165,6 +189,14 @@ public class GameEngine implements ActionListener, MouseListener
 				xPos = diameter;
 				yPos = diameter;
 			}
+			else if( row == 0 && col == horizCellCount - 1 )
+			{
+				// if bubble is in the top-right cell, change bubble's
+				// position manually to prevent it from becoming
+				// invisible behind the pause button
+				xPos = col * alignmentSpace;
+				yPos = diameter;
+			}
 			else
 			{
 				xPos = col * alignmentSpace + (int)( Math.random() * 
@@ -190,6 +222,14 @@ public class GameEngine implements ActionListener, MouseListener
 				// position manually to prevent it from becoming
 				// invisible behind the time and score texts
 				xPos = diameter;
+				yPos = diameter;
+			}
+			else if( row == 0 && col == horizCellCount - 1 )
+			{
+				// if bubble is in the top-right cell, change bubble's
+				// position manually to prevent it from becoming
+				// invisible behind the pause button
+				xPos = col * alignmentSpace;
 				yPos = diameter;
 			}
 			else
@@ -219,6 +259,14 @@ public class GameEngine implements ActionListener, MouseListener
 				xPos = diameter;
 				yPos = diameter;
 			}
+			else if( row == 0 && col == horizCellCount - 1 )
+			{
+				// if bubble is in the top-right cell, change bubble's
+				// position manually to prevent it from becoming
+				// invisible behind the pause button
+				xPos = col * alignmentSpace;
+				yPos = diameter;
+			}
 			else
 			{
 				xPos = col * alignmentSpace + (int)( Math.random() * 
@@ -233,11 +281,34 @@ public class GameEngine implements ActionListener, MouseListener
 	public void pause()
 	{
 		timer.stop();
+		Driver.changeActivePanel( new PauseMenu() );
 	}
 	
 	public void resume()
 	{
 		timer.start();
+		Driver.changeActivePanel( UI );
+	}
+	
+	public void gameWon()
+	{
+		// There is no valid bubble left on the screen, game is won
+		System.out.println( "WON" );
+		timer.stop();
+		
+		// increment the score proportional to remaining time
+		score += time * SCORE_INCREMENT_AMOUNT_BY_REMAINING_TIME;
+		
+		MenuManager.getInstance().changeMenu( new LevelCompleteMenu() );
+	}
+	
+	public void gameLost()
+	{
+		// Timer reached 0, game is lost
+		System.out.println( "LOST" );
+		timer.stop();
+		
+		MenuManager.getInstance().changeMenu( new LevelLostMenu() );
 	}
 	
 	public void clickedBubble( Bubble b )
@@ -316,23 +387,6 @@ public class GameEngine implements ActionListener, MouseListener
 				selectedBubble = null;
 			}
 		}
-	}
-	
-	public void gameWon()
-	{
-		// There is no valid bubble left on the screen, game is won
-		System.out.println( "WON" );
-		timer.stop();
-		
-		// increment the score proportional to remaining time
-		score += time * SCORE_INCREMENT_AMOUNT_BY_REMAINING_TIME;
-	}
-	
-	public void gameLost()
-	{
-		// Timer reached 0, game is lost
-		System.out.println( "LOST" );
-		timer.stop();
 	}
 	// END OF OTHER METHODS
 	

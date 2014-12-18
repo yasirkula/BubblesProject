@@ -19,14 +19,23 @@ import GameManagement.MenuManager;
 
 public class HelpMenu extends Menu
 {
+	// CONSTANTS
+	private final String HELP_TEXT = "\nSuch help document\n\n" +
+			 "many content\n\n" +
+			 "so helpful\n\n" +
+			 "wow\n";
+	// END OF CONSTANTS
+	
 	// VARIABLES
 	private JButton backButton;
 	private JScrollPane scrollPane;
     private JTextPane textPane;
+    
+    private boolean isGamePaused;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
-	public HelpMenu()
+	public HelpMenu( boolean isGamePaused )
 	{
 		super();
 		
@@ -39,15 +48,12 @@ public class HelpMenu extends Menu
 		add( scrollPane, BorderLayout.CENTER );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_END );
 		add( backButton, BorderLayout.PAGE_END );
+		
+		this.isGamePaused = isGamePaused;
 	}
 	// END OF CONSTRUCTORS
 	
 	// MUTATOR - ACCESSOR METHODS
-	public void setHelpText( String h )
-	{
-		textPane.setText( h );
-		textPane.repaint();
-	}
 	// END OF MUTATOR - ACCESSOR METHODS
 	
 	// OTHER METHODS
@@ -64,6 +70,7 @@ public class HelpMenu extends Menu
         textPane.setBackground( new Color( 237, 237, 237 ) );
         textPane.setForeground( Color.BLACK );
         textPane.setFont( f );
+        textPane.setText( HELP_TEXT );
         
         // Center the text
         StyledDocument doc = textPane.getStyledDocument();
@@ -83,7 +90,12 @@ public class HelpMenu extends Menu
 	public void actionPerformed( ActionEvent e ) 
 	{
 		if( e.getSource() == backButton )
-    		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
+		{
+			if( !isGamePaused )
+				MenuManager.getInstance().changeMenu( new MainMenu() );
+			else
+				MenuManager.getInstance().changeMenu( new PauseMenu() );
+		}
 	}
 	// END OF OTHER METHODS
 }

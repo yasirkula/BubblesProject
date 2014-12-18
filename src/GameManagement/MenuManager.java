@@ -15,7 +15,6 @@ public class MenuManager
 	private static MenuManager instance = null;
 	
 	private SettingsManager settings;
-	private GameEngine engine;
 	private HighScores scores;
 	// END OF VARIABLES
 	

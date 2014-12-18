@@ -1,9 +1,7 @@
 package GameAssets;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
@@ -48,6 +46,11 @@ public class Bubble
 		return RADIUS;
 	}
 	
+	public int getDiameter()
+	{
+		return DIAMETER;
+	}
+	
 	public int getX()
 	{
 		return xPos;
@@ -84,10 +87,6 @@ public class Bubble
 	public void draw( Graphics g )
 	{
 		g.setColor( bubbleColor );
-		g.fillOval( xPos, yPos, DIAMETER, DIAMETER );
-		g.setColor( Color.black );
-		( (Graphics2D) g ).setStroke( new BasicStroke( 3 ) );
-		g.drawOval( xPos, yPos, DIAMETER, DIAMETER );
 		content.draw( g, this );
 	}
 	

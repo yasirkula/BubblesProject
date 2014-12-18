@@ -7,20 +7,24 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import GameAssets.Bubble;
 import GameManagement.GameEngine;
 
-public class GameUI extends JPanel implements MouseMotionListener
+public class GameUI extends JPanel implements MouseMotionListener, ActionListener
 {
 	// VARIABLES
 	private GameEngine engine;
 	
+	private JButton pauseButton;
 	private Point mousePos;
 	// END OF VARIABLES
 	
@@ -30,7 +34,16 @@ public class GameUI extends JPanel implements MouseMotionListener
 		engine = GameEngine.getInstance();
 		setBackground( GameEngine.getInstance().getSettings().getBackgroundColor() );
 		mousePos = new Point();
-		requestFocus();
+		
+		// Set layout to null so that we can position components manually
+		setLayout( null );
+		pauseButton = new JButton( "PAUSE" );
+		pauseButton.setSize( 95, 50 );
+		pauseButton.setBackground( new Color( 190, 205, 210 ) );
+		pauseButton.setFocusable( false );
+		pauseButton.addActionListener( this );
+		
+		add( pauseButton );
 		
 		// UI should watch mouse motion so that it can draw line from
 		// selected bubble to mouse position at mouse movement
@@ -67,7 +80,7 @@ public class GameUI extends JPanel implements MouseMotionListener
  			g2d.setStroke( new BasicStroke( 3 ) );
  			
  			GradientPaint redtowhite = new GradientPaint( engine.getSelectedBubble().getCenterPoint(),
- 							Color.GRAY, mousePos, Color.BLACK );
+ 							Color.BLACK, mousePos, new Color( 150, 0, 0 ) );
  			g2d.setPaint(redtowhite);
  			g.drawLine( engine.getSelectedBubble().getCenterPoint().x,
  						engine.getSelectedBubble().getCenterPoint().y,
@@ -109,6 +122,10 @@ public class GameUI extends JPanel implements MouseMotionListener
 		g.setColor( Color.white );
 		g.drawString( "Time left: " + engine.getTime(), 10, 25 );
 		g.drawString( "Score: " + engine.getScore(), 10, 55 );
+		
+		// position pauseButton correctly so that it is always
+		// at top-right even when the frame is resized
+		pauseButton.setLocation( getWidth() - 100, 5 );
 	}
 	// END OF OTHER METHODS
 
@@ -119,6 +136,14 @@ public class GameUI extends JPanel implements MouseMotionListener
 		{
 			mousePos = e.getPoint();
 			repaint();
+		}
+	}
+	
+	public void actionPerformed( ActionEvent e ) 
+	{
+		if( e.getSource() == pauseButton )
+		{
+			engine.pause();
 		}
 	}
 	
