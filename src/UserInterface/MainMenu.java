@@ -98,19 +98,11 @@ public class MainMenu extends Menu
         }
         else if( e.getSource() == creditsButton )
         {
-        	Menu m = new CreditsMenu();
-        	String creditsText = "\n(-(-_(-_-)_-)-)\n\n" +
-        						 "Four brilliant students worked on this project\n\n" +
-        						 "Esra Zeynep Kurt / 21101384\nRana Kösterit / 21100715\n" +
-        						 "Süleyman Yasir Kula / 21200823\nTan Küçükoðlu / 21201893\n" +
-        						 "\n(>'.')>   <('.'<)";
-        	( (CreditsMenu) m ).setCreditsText( creditsText );
-        	MenuManager.getInstance().changeMenu( m );
+        	MenuManager.getInstance().changeMenu( new CreditsMenu() );
         }
         else if( e.getSource() == highscoresButton )
         {
-        	Menu m = new HighScoresMenu();
-        	MenuManager.getInstance().changeMenu( m );
+        	MenuManager.getInstance().changeMenu( new HighScoresMenu() );
         }
         else if( e.getSource() == helpButton )
         {

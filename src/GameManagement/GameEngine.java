@@ -23,6 +23,8 @@ public class GameEngine implements ActionListener, MouseListener
 	private final int INITIAL_TIME = 60;
 	private final int MINIMUM_BUBBLES = 10;
 	private final int MINIMUM_TRAP_BUBBLES = 1;
+	private final int BUBBLE_INCREMENT_AMOUNT = 2;
+	private final int TRAP_BUBBLE_INCREMENT_AMOUNT = 1;
 	private final int SCORE_INCREMENT_AMOUNT_BY_MATCH = 10;
 	private final int SCORE_INCREMENT_AMOUNT_BY_REMAINING_TIME = 5;
 	// END OF CONSTANTS
@@ -141,14 +143,25 @@ public class GameEngine implements ActionListener, MouseListener
 		
 		if( episode.equalsIgnoreCase( "Vocabulary" ) )
 		{
-			bubbleCollection.getVocabBubbles( MINIMUM_BUBBLES + levelID - 1, 
-					MINIMUM_TRAP_BUBBLES + levelID - 1, // levelID starts from 1, not 0!
+			// note that levelID starts from 1, not 0!
+			bubbleCollection.getVocabBubbles( 
+					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
+					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
 					bubbles, matchingBubbles, trapBubbles );
 		}
 		else if( episode.equalsIgnoreCase( "Biology" ) )
 		{
-			bubbleCollection.getBioBubbles( MINIMUM_BUBBLES + levelID - 1, 
-					MINIMUM_TRAP_BUBBLES + levelID - 1, // levelID starts from 1, not 0!
+			// note that levelID starts from 1, not 0!
+			bubbleCollection.getBioBubbles( 
+					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
+					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
+					bubbles, matchingBubbles, trapBubbles );
+		}
+		else
+		{
+			bubbleCollection.getChemBubbles( 
+					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
+					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
 					bubbles, matchingBubbles, trapBubbles );
 		}
 		

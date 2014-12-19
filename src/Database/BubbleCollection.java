@@ -1,11 +1,20 @@
 /*
  * Animal images are taken from:
  * http://www.animalcorner.co.uk
+ *
+ * Vocabulary words are taken from:
+ * http://examples.yourdictionary.com/
+ * examples-of-antonyms-synonyms-and-homonyms.html
+ * http://examples.yourdictionary.com/
+ * examples-of-antonyms.html
+ * http://www.englishleap.com/vocabulary/antonym
+ * 
+ * Chemistry words are taken from:
+ * periodic table (obviously)
  */
 
 package Database;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -55,18 +64,15 @@ public class BubbleCollection
 		vocabBubbles = new ArrayList<Bubble>();
 		vocabMatchBubbles = new ArrayList<Bubble>();
 		
-		/****
-		 * 
-		 * 
-		 */
-
 		// Inspired from http://docs.oracle.com/javase/tutorial/essential/io/file.html
 		// and
 		// http://stackoverflow.com/questions/14918188/reading
 		// -text-file-with-utf-8-encoding-using-java
 		// answered by: Shobit Sharma
 		
-		// Fetch biology bubble data from the disk
+		//
+		// Fetch BIOLOGY bubble data from the disk
+		//
 		BufferedReader buffer = null;
 		
 		try
@@ -102,52 +108,76 @@ public class BubbleCollection
 		   catch( Exception ex ){}
 		}
 		
-		/****
-		 * 
-		 * 
-		 */
-		
-		for( int i = 0; i < 4; i++ )
+		//
+		// Fetch VOCABULARY bubble data from the disk
+		//
+		try
 		{
-			Bubble b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Good" );
-			vocabBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Bad" );
-			vocabMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Early" );
-			vocabBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Late" );
-			vocabMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Big" );
-			vocabBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Small" );
-			vocabMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Left" );
-			vocabBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Right" );
-			vocabMatchBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Güzel" );
-			vocabBubbles.add( b );
-			
-			b = new Bubble( getContent( ContentType.TEXT ) );
-			( (TextContent) b.getContent() ).setText( "Çirkin" );
-			vocabMatchBubbles.add( b );
+			buffer = new BufferedReader( new InputStreamReader( 
+					new FileInputStream( "dataVocabulary.dat" ), "UTF-8" ) );
+		    
+			String line = null;
+		    while( ( line = buffer.readLine() ) != null ) 
+		    {
+		        String[] tokens = line.split( " " );
+
+	        	try
+	        	{
+	        		Bubble b = new Bubble( getContent( ContentType.TEXT ) );
+	    			( (TextContent) b.getContent() ).setText( tokens[1] );
+	    			vocabBubbles.add( b );
+	    			
+	    			b = new Bubble( getContent( ContentType.TEXT ) );
+	    			( (TextContent) b.getContent() ).setText( tokens[0] );
+	    			vocabMatchBubbles.add( b );
+	        	}
+	        	catch( Exception e ){}
+		    }
+		} 
+		catch( IOException x ){}
+		finally 
+		{
+		   try 
+		   {
+			   buffer.close();
+		   } 
+		   catch( Exception ex ){}
+		}
+		
+		//
+		// Fetch CHEMISTRY bubble data from the disk
+		//
+		try
+		{
+			buffer = new BufferedReader( new InputStreamReader( 
+					new FileInputStream( "dataChemistry.dat" ), "UTF-8" ) );
+		    
+			String line = null;
+		    while( ( line = buffer.readLine() ) != null ) 
+		    {
+		        String[] tokens = line.split( " " );
+
+	        	try
+	        	{
+	        		Bubble b = new Bubble( getContent( ContentType.TEXT ) );
+	    			( (TextContent) b.getContent() ).setText( tokens[1] );
+	    			chemBubbles.add( b );
+	    			
+	    			b = new Bubble( getContent( ContentType.TEXT ) );
+	    			( (TextContent) b.getContent() ).setText( tokens[0] );
+	    			chemMatchBubbles.add( b );
+	        	}
+	        	catch( Exception e ){}
+		    }
+		} 
+		catch( IOException x ){}
+		finally 
+		{
+		   try 
+		   {
+			   buffer.close();
+		   } 
+		   catch( Exception ex ){}
 		}
 	}
 	
@@ -156,7 +186,7 @@ public class BubbleCollection
 										   ArrayList<Bubble> matchBubbles,
 										   ArrayList<Bubble> trapBubbles )
 	{
-		for( int i = 0; i < vocabBubbles.size(); i++ )
+		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( vocabBubbles.get( i ) );
 			matchBubbles.add( vocabMatchBubbles.get( i ) );
@@ -180,7 +210,7 @@ public class BubbleCollection
 			   ArrayList<Bubble> matchBubbles,
 			   ArrayList<Bubble> trapBubbles )
 	{
-		for( int i = 0; i < chemBubbles.size(); i++ )
+		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( chemBubbles.get( i ) );
 			matchBubbles.add( chemMatchBubbles.get( i ) );

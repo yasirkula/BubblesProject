@@ -19,6 +19,14 @@ import GameManagement.MenuManager;
 
 public class CreditsMenu extends Menu
 {
+	// CONSTANTS
+	private final String CREDITS_TEXT = "\n(-(-_(-_-)_-)-)\n\n" +
+			 "Four brilliant students worked on this project\n\n" +
+			 "Esra Zeynep Kurt / 21101384\nRana Kösterit / 21100715\n" +
+			 "Süleyman Yasir Kula / 21200823\nTan Küçükoðlu / 21201893\n" +
+			 "\n(>'.')>   <('.'<)";
+	// END OF CONSTANTS
+	
 	// VARIABLES
 	private JButton backButton;
     private JScrollPane scrollPane;
@@ -43,11 +51,6 @@ public class CreditsMenu extends Menu
 	// END OF CONSTRUCTORS
 	
 	// MUTATOR - ACCESSOR METHODS
-	public void setCreditsText( String c )
-	{
-		textPane.setText( c );
-		textPane.repaint();
-	}
 	// END OF MUTATOR - ACCESSOR METHODS
 	
 	// OTHER METHODS
@@ -64,6 +67,7 @@ public class CreditsMenu extends Menu
         textPane.setBackground( new Color( 237, 237, 237 ) );
         textPane.setForeground( Color.BLACK );
         textPane.setFont( f );
+        textPane.setText( CREDITS_TEXT );
         
         // Center the text
         StyledDocument doc = textPane.getStyledDocument();
