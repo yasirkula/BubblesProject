@@ -88,7 +88,7 @@ public class HighScoresMenu extends Menu
         textPaneBio.setText( "bio" );
         textPaneChem.setText( "chem" );
         textPaneVocab.setText( "vocab" );  */      
-        textPane.setText( "BIO" );
+        textPane.setText( MenuManager.getInstance().getScores().getNames( "biology" ).get( 0 ) );
         
         // Set colors and font
         Font f = new Font( "Default", Font.PLAIN, 23 );
@@ -147,24 +147,29 @@ public class HighScoresMenu extends Menu
     		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
 		else if( e.getSource() == resetButton ) 
 		{
-			System.out.println( "RESET SCORES" );
+			/*if( textPane.getText() == "Biology Scores" )
+				System.out.println( "Reset bio" );
+			else if( textPane.getText() == "Chemistry Scores" )
+				System.out.println( "Reset chem" );
+			else if( textPane.getText() == "Vocabulary Scores" )
+				System.out.println( "Reset vocab" );*/
+			System.out.println( "reset scores" );
 		}
 		else if( e.getSource() == bioScoresButton )
 		{
 			//scrollPane.setViewportView( textPaneBio );
-			textPane.setText( "BIO" );
+			textPane.setText( MenuManager.getInstance().getScores().getNames( "biology" ).get( 0 ) );
 		}
 		else if( e.getSource() == chemScoresButton )
 		{
 			//scrollPane.setViewportView( textPaneChem );
-			textPane.setText( "CHEM" );
+			textPane.setText(MenuManager.getInstance().getScores().getNames( "chemistry" ).get( 0 ) );
 		}
 		else if( e.getSource() == vocabScoresButton )
 		{
 			//scrollPane.setViewportView( textPaneVocab );
-			textPane.setText( "VOCAB" );
+			textPane.setText(MenuManager.getInstance().getScores().getNames( "vocabulary" ).get( 0 ) );
 		}
-			
 	}
 	// END OF OTHER METHODS
 }
