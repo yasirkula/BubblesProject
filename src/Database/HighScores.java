@@ -1,6 +1,5 @@
 package Database;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -100,7 +99,7 @@ public class HighScores
 				    buffer.write( "Biology Scores " );
 				    for(int i = 0; i < bioNames.size(); i++)
 				    {
-				    	
+				    	bioNames.get( i );
 				    }
 				} 
 				catch( IOException ex ){} 
@@ -130,13 +129,16 @@ public class HighScores
 			String line = null;
 			while( ( line = buffer.readLine() ) != null ) 
 			{
-				String[] tokens = line.split( " " );
+				String[] tokens = line.split( "\n" );
 				        
 				if( tokens[0].equals( "Biology Scores" ) )
 				{
 				   	try
 				    {
-				     	// CODE HERE
+				     	for( int i = 0; i < tokens.length; i++ )
+				     	{
+				     		bioNames.add( tokens[i] );
+				     	}
 				    }
 				    catch( Exception e ){}
 				}
@@ -146,7 +148,7 @@ public class HighScores
 				    {
 		        		for( int i = 0; i < tokens.length; i++ )
 						{
-		        			// CODE HERE
+		        			chemNames.add( tokens[i] );
 						}
 				    }
 		        	catch( Exception e ){}
@@ -157,7 +159,7 @@ public class HighScores
 					{
 						for( int i = 0; i < tokens.length; i++ )
 						{
-							
+							vocabNames.add( tokens[i] );
 						}
 					}
 					catch( Exception e ){}
