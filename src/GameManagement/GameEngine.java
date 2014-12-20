@@ -1,6 +1,7 @@
 package GameManagement;
 
 import java.util.ArrayList;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -9,6 +10,7 @@ import java.awt.event.MouseListener;
 import javax.swing.Timer;
 
 import GameAssets.Bubble;
+import GameAssets.PointFactory;
 import Database.SettingsManager;
 import Database.BubbleCollection;
 import Driver.Driver;
@@ -43,6 +45,7 @@ public class GameEngine implements ActionListener, MouseListener
 	private Bubble selectedBubble;
 	private SettingsManager settings;
 	private BubbleCollection bubbleCollection;
+	private PointFactory bubblePositionFactory;
 	private GameUI UI;
 	// END OF VARIABLES
 	
@@ -51,6 +54,7 @@ public class GameEngine implements ActionListener, MouseListener
 	{
 		settings = MenuManager.getInstance().getSettings();
 		bubbleCollection = new BubbleCollection();
+		bubblePositionFactory = new PointFactory();
 		instance = this;
 	}
 	// END OF CONSTRUCTORS
@@ -159,11 +163,14 @@ public class GameEngine implements ActionListener, MouseListener
 		}
 		else
 		{
+			// note that levelID starts from 1, not 0!
 			bubbleCollection.getChemBubbles( 
 					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
 					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
 					bubbles, matchingBubbles, trapBubbles );
 		}
+		
+		bubblePositionFactory.initialize();
 		
 		randomizeBubblePositions();
 		timer.start();
@@ -173,121 +180,36 @@ public class GameEngine implements ActionListener, MouseListener
 	{
 		// reposition the bubbles so that they don't overlap
 		// do the repositioning randomly
-		int diameter = (int)( 2 * Bubble.getRadius() );
-		int alignmentSpace = 2 * diameter;
-		int horizCellCount = Driver.getFrameWidth() / alignmentSpace;
-		int vertCellCount = Driver.getFrameHeight() / alignmentSpace;
-		int cellCount = horizCellCount * vertCellCount;
-		
-		ArrayList<Integer> availableCells = new ArrayList<Integer>();
-		for( int i = 0; i < cellCount; i++ )
-		{
-			availableCells.add( i );
-		}
-
 		for( Bubble b : bubbles )
 		{
-			int randomIndex = (int)( Math.random() * availableCells.size() );
-			int randomNumber = availableCells.get( randomIndex );
-			int row = randomNumber / horizCellCount;
-			int col = randomNumber % horizCellCount;
-			availableCells.remove( randomIndex );
-			
-			int xPos, yPos;
-			if( row == 0 && col == 0 )
-			{
-				// if bubble is in the top-left cell, change bubble's
-				// position manually to prevent it from becoming
-				// invisible behind the time and score texts
-				xPos = diameter;
-				yPos = diameter;
-			}
-			else if( row == 0 && col == horizCellCount - 1 )
-			{
-				// if bubble is in the top-right cell, change bubble's
-				// position manually to prevent it from becoming
-				// invisible behind the pause button
-				xPos = col * alignmentSpace;
-				yPos = diameter;
-			}
-			else
-			{
-				xPos = col * alignmentSpace + (int)( Math.random() * 
-						( ( col == horizCellCount - 1 ) ? 0 : diameter ) );
-				yPos = row * alignmentSpace + (int)( Math.random() * 
-						( ( row == vertCellCount - 1 ) ? 0 : diameter ) );
-			}
-			b.setLocation( xPos, yPos );
+			Point p = bubblePositionFactory.getRandomBubblePosition();
+			b.setLocation( p.x, p.y );
 		}
 		
-		for( Bubble b : matchingBubbles )
+		// only one matching bubble will be on screen at the beginning
+		// others will pop as player match bubbles
+		// randomIndex: index of the first matching bubble that will
+		// appear on screen when game starts
+		int randomIndex = (int)( Math.random() * matchingBubbles.size() );
+		int offset = -2 * Bubble.getRadius() - 10;
+		
+		for( int i = 0; i < matchingBubbles.size(); i++ )
 		{
-			int randomIndex = (int)( Math.random() * availableCells.size() );
-			int randomNumber = availableCells.get( randomIndex );
-			int row = randomNumber / horizCellCount;
-			int col = randomNumber % horizCellCount;
-			availableCells.remove( randomIndex );
-			
-			int xPos, yPos;
-			if( row == 0 && col == 0 )
+			if( i == randomIndex )
 			{
-				// if bubble is in the top-left cell, change bubble's
-				// position manually to prevent it from becoming
-				// invisible behind the time and score texts
-				xPos = diameter;
-				yPos = diameter;
-			}
-			else if( row == 0 && col == horizCellCount - 1 )
-			{
-				// if bubble is in the top-right cell, change bubble's
-				// position manually to prevent it from becoming
-				// invisible behind the pause button
-				xPos = col * alignmentSpace;
-				yPos = diameter;
+				Point p = bubblePositionFactory.getRandomBubblePosition();
+				matchingBubbles.get( i ).setLocation( p.x, p.y );
 			}
 			else
 			{
-				xPos = col * alignmentSpace + (int)( Math.random() * 
-						( ( col == horizCellCount - 1 ) ? 0 : diameter ) );
-				yPos = row * alignmentSpace + (int)( Math.random() * 
-						( ( row == vertCellCount - 1 ) ? 0 : diameter ) );
+				matchingBubbles.get( i ).setLocation( offset, offset );
 			}
-			b.setLocation( xPos, yPos );
 		}
 		
 		for( Bubble b : trapBubbles )
 		{
-			int randomIndex = (int)( Math.random() * availableCells.size() );
-			int randomNumber = availableCells.get( randomIndex );
-			int row = randomNumber / horizCellCount;
-			int col = randomNumber % horizCellCount;
-			availableCells.remove( randomIndex );
-
-			int xPos, yPos;
-			if( row == 0 && col == 0 )
-			{
-				// if bubble is in the top-left cell, change bubble's
-				// position manually to prevent it from becoming
-				// invisible behind the time and score texts
-				xPos = diameter;
-				yPos = diameter;
-			}
-			else if( row == 0 && col == horizCellCount - 1 )
-			{
-				// if bubble is in the top-right cell, change bubble's
-				// position manually to prevent it from becoming
-				// invisible behind the pause button
-				xPos = col * alignmentSpace;
-				yPos = diameter;
-			}
-			else
-			{
-				xPos = col * alignmentSpace + (int)( Math.random() * 
-						( ( col == horizCellCount - 1 ) ? 0 : diameter ) );
-				yPos = row * alignmentSpace + (int)( Math.random() * 
-						( ( row == vertCellCount - 1 ) ? 0 : diameter ) );
-			}
-			b.setLocation( xPos, yPos );
+			Point p = bubblePositionFactory.getRandomBubblePosition();
+			b.setLocation( p.x, p.y );
 		}
 	}
 	
@@ -351,6 +273,8 @@ public class GameEngine implements ActionListener, MouseListener
 					{
 						// we have a match!
 						// remove matching bubbles from game field
+						bubblePositionFactory.freeCell( bubbles.get( bubbleIndex ).getCenterPoint() );
+						bubblePositionFactory.freeCell( matchingBubbles.get( bubbleIndex ).getCenterPoint() );
 						bubbles.remove( bubbleIndex );
 						matchingBubbles.remove( bubbleIndex );
 						
@@ -360,6 +284,12 @@ public class GameEngine implements ActionListener, MouseListener
 						// if there is no valid bubble left, game is won
 						if( bubbles.size() == 0 )
 							gameWon();
+						else
+						{
+							int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
+							Point p = bubblePositionFactory.getRandomBubblePosition();
+							matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
+						}
 					}
 					else
 					{
@@ -377,6 +307,8 @@ public class GameEngine implements ActionListener, MouseListener
 					{
 						// we have a match!
 						// remove matching bubbles from game field
+						bubblePositionFactory.freeCell( bubbles.get( bubbleIndex ).getCenterPoint() );
+						bubblePositionFactory.freeCell( matchingBubbles.get( bubbleIndex ).getCenterPoint() );
 						bubbles.remove( bubbleIndex );
 						matchingBubbles.remove( bubbleIndex );
 						
@@ -386,6 +318,12 @@ public class GameEngine implements ActionListener, MouseListener
 						// if there is no valid bubble left, game is won
 						if( bubbles.size() == 0 )
 							gameWon();
+						else
+						{
+							int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
+							Point p = bubblePositionFactory.getRandomBubblePosition();
+							matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
+						}
 					}
 					else
 					{

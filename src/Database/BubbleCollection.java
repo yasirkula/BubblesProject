@@ -186,6 +186,19 @@ public class BubbleCollection
 										   ArrayList<Bubble> matchBubbles,
 										   ArrayList<Bubble> trapBubbles )
 	{
+		if( 2 * size + trapBubblesSize > 2 * vocabBubbles.size() )
+		{
+			if( size > vocabBubbles.size() )
+			{
+				size = vocabBubbles.size();
+				trapBubblesSize = 0;
+			}
+			else
+			{
+				trapBubblesSize = 2 * ( vocabBubbles.size() - size );
+			}
+		}
+		
 		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( vocabBubbles.get( i ) );
@@ -198,6 +211,19 @@ public class BubbleCollection
 			   ArrayList<Bubble> matchBubbles,
 			   ArrayList<Bubble> trapBubbles )
 	{
+		if( 2 * size + trapBubblesSize > 2 * bioBubbles.size() )
+		{
+			if( size > bioBubbles.size() )
+			{
+				size = bioBubbles.size();
+				trapBubblesSize = 0;
+			}
+			else
+			{
+				trapBubblesSize = 2 * ( bioBubbles.size() - size );
+			}
+		}
+		
 		for( int i = 0; i < 20; i++ )
 		{
 			bubbles.add( bioBubbles.get( i ) );
@@ -210,6 +236,19 @@ public class BubbleCollection
 			   ArrayList<Bubble> matchBubbles,
 			   ArrayList<Bubble> trapBubbles )
 	{
+		if( 2 * size + trapBubblesSize > 2 * chemBubbles.size() )
+		{
+			if( size > chemBubbles.size() )
+			{
+				size = chemBubbles.size();
+				trapBubblesSize = 0;
+			}
+			else
+			{
+				trapBubblesSize = 2 * ( chemBubbles.size() - size );
+			}
+		}
+		
 		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( chemBubbles.get( i ) );
