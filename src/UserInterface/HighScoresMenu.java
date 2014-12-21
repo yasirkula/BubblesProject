@@ -1,3 +1,9 @@
+/**
+ * HighScoresMenu - Shows the highscores for each episode
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -6,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -17,6 +24,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import GameAssets.EpisodeType;
 import GameManagement.MenuManager;
 
 public class HighScoresMenu extends Menu
@@ -28,9 +36,9 @@ public class HighScoresMenu extends Menu
 	private JButton chemScoresButton;
 	private JButton vocabScoresButton;
 	private JScrollPane scrollPane;
-    private JTextPane textPane;/*Bio;
-    private JTextPane textPaneChem;
-    private JTextPane textPaneVocab;*/
+    private JTextPane textPane;
+    
+    private EpisodeType currentlyShownEpisode;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
@@ -58,6 +66,8 @@ public class HighScoresMenu extends Menu
 		lowerPanel.add( resetButton );
 		lowerPanel.add( backButton );
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
 		add( topPanel, BorderLayout.PAGE_START );
@@ -81,33 +91,16 @@ public class HighScoresMenu extends Menu
         vocabScoresButton = new JButton( "Vocabulary Scores" );
         scrollPane = new JScrollPane();
         textPane = new JTextPane();
-        /*textPaneBio = new JTextPane();
-        textPaneChem = new JTextPane();
-        textPaneVocab = new JTextPane();
         
-        textPaneBio.setText( "bio" );
-        textPaneChem.setText( "chem" );
-        textPaneVocab.setText( "vocab" );  */      
-        textPane.setText( MenuManager.getInstance().getScores().getNames( "biology" ).get( 0 ) );
+        // Initially, show the highscores for biology episode
+        showScoresOf( EpisodeType.BIOLOGY );
         
         // Set colors and font
-        Font f = new Font( "Default", Font.PLAIN, 23 );
+        Font f = new Font( "Default", Font.PLAIN, 20 );
         textPane.setEditable( false );
         textPane.setBackground( new Color( 237, 237, 237 ) );
         textPane.setForeground( Color.BLACK );
         textPane.setFont( f );
-        /*textPaneBio.setEditable( false );
-        textPaneBio.setBackground( new Color( 237, 237, 237 ) );
-        textPaneBio.setForeground( Color.BLACK );
-        textPaneBio.setFont( f );
-        textPaneChem.setEditable( false );
-        textPaneChem.setBackground( new Color( 237, 237, 237 ) );
-        textPaneChem.setForeground( Color.BLACK );
-        textPaneChem.setFont( f );
-        textPaneVocab.setEditable( false );
-        textPaneVocab.setBackground( new Color( 237, 237, 237 ) );
-        textPaneVocab.setForeground( Color.BLACK );
-        textPaneVocab.setFont( f );*/
         
         // Center the text
         StyledDocument doc = textPane.getStyledDocument();
@@ -141,34 +134,63 @@ public class HighScoresMenu extends Menu
         chemScoresButton.addActionListener( this );
         vocabScoresButton.addActionListener( this );
 	}
+	
+	private void showScoresOf( EpisodeType episode )
+	{
+		// Loads the highscores of the selected episode from the 
+		// HighScores object
+		if( episode != null )
+		{
+			currentlyShownEpisode = episode;
+			String text = "";
+			
+			switch( episode )
+			{
+				case BIOLOGY: text = "- BIOLOGY -\n\n"; break;
+				case CHEMISTRY: text = "- CHEMISTRY -\n\n"; break;
+				case VOCABULARY: text = "- VOCABULARY -\n\n"; break;
+			}
+			
+			ArrayList<Integer> scores = MenuManager.getInstance()
+					.getScores().getScores( episode );
+			ArrayList<String> names = MenuManager.getInstance()
+					.getScores().getNames( episode );
+			
+			for( int i = 0; i < scores.size(); i++ )
+			{
+				text += ( i + 1 ) + ") " + names.get( i ) + " " + scores.get( i );
+				
+				if( i != scores.size() - 1 )
+					text += "\n\n";
+			}
+			
+			textPane.setText( text );
+		}
+	}
+	
 	public void actionPerformed( ActionEvent e ) 
 	{
 		if( e.getSource() == backButton )
-    		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
+    		MenuManager.getInstance().changeMenu( new MainMenu() );
 		else if( e.getSource() == resetButton ) 
 		{
-			/*if( textPane.getText() == "Biology Scores" )
-				System.out.println( "Reset bio" );
-			else if( textPane.getText() == "Chemistry Scores" )
-				System.out.println( "Reset chem" );
-			else if( textPane.getText() == "Vocabulary Scores" )
-				System.out.println( "Reset vocab" );*/
-			System.out.println( "reset scores" );
+			// reset highscores
+			MenuManager.getInstance().getScores().resetHighScores();
+			
+			// refresh the highscores table
+			showScoresOf( currentlyShownEpisode );
 		}
 		else if( e.getSource() == bioScoresButton )
 		{
-			//scrollPane.setViewportView( textPaneBio );
-			textPane.setText( MenuManager.getInstance().getScores().getNames( "biology" ).get( 0 ) );
+			showScoresOf( EpisodeType.BIOLOGY );
 		}
 		else if( e.getSource() == chemScoresButton )
 		{
-			//scrollPane.setViewportView( textPaneChem );
-			textPane.setText(MenuManager.getInstance().getScores().getNames( "chemistry" ).get( 0 ) );
+			showScoresOf( EpisodeType.CHEMISTRY );
 		}
 		else if( e.getSource() == vocabScoresButton )
 		{
-			//scrollPane.setViewportView( textPaneVocab );
-			textPane.setText(MenuManager.getInstance().getScores().getNames( "vocabulary" ).get( 0 ) );
+			showScoresOf( EpisodeType.VOCABULARY );
 		}
 	}
 	// END OF OTHER METHODS

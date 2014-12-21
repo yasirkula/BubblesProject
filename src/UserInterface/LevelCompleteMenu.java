@@ -117,6 +117,13 @@ public class LevelCompleteMenu extends Menu
 	{
 		if( e.getSource() == nextLevelButton )
 		{
+			// highscore table does not support white space
+			String name = nameInput.getText();
+			name = name.replace( " ", "" );
+			MenuManager.getInstance().getScores().addHighScore( 
+					GameEngine.getInstance().getEpisode(), GameEngine.getInstance().getLevelID() - 1,
+					name, GameEngine.getInstance().getScore() );
+			
 			if( GameEngine.getInstance().getLevelID() >= MenuManager.LEVEL_COUNT )
 			{
 				// if it was the last level of this episode,
@@ -132,6 +139,13 @@ public class LevelCompleteMenu extends Menu
 		}
 		else if( e.getSource() == exitButton )
 		{
+			// highscore table does not support white space
+			String name = nameInput.getText();
+			name = name.replace( " ", "" );
+			MenuManager.getInstance().getScores().addHighScore( 
+					GameEngine.getInstance().getEpisode(), GameEngine.getInstance().getLevelID() - 1,
+					name, GameEngine.getInstance().getScore() );
+			
 			MenuManager.getInstance().changeMenu( new MainMenu() );
 		}
 	}
