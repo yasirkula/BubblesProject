@@ -207,17 +207,21 @@ public class BubbleCollection
 			}
 		}
 
-		int[] randIndexes = generateRandomIndexes(size, vocabBubbles.size());
+		int[] randIndexes = generateRandomIndexes( size, vocabBubbles.size() );
 		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( vocabBubbles.get( randIndexes[i] ) );
 			matchBubbles.add( vocabMatchBubbles.get( randIndexes[i]) );
 		}
 
-		int[] randIndexesForTraps = generateRandomIndexesExceptForSelected(trapBubblesSize, vocabBubbles.size(),randIndexes);
+		int[] randIndexesForTraps = generateRandomIndexesExceptForSelected( trapBubblesSize, vocabBubbles.size(),randIndexes );
 		for( int i = 0; i < trapBubblesSize; i++ )
 		{
-			trapBubbles.add( vocabBubbles.get( randIndexesForTraps[i] ) );
+			// fetch half of the trap bubbles from bubbles and other half from matchingBubbles
+			if( i % 2  == 0 )
+				trapBubbles.add( vocabBubbles.get( randIndexesForTraps[i] ) );
+			else
+				trapBubbles.add( vocabMatchBubbles.get( randIndexesForTraps[i] ) );
 		}
 	}
 
@@ -240,17 +244,21 @@ public class BubbleCollection
 		}
 
 
-		int[] randIndexes = generateRandomIndexes(10,bioBubbles.size());
+		int[] randIndexes = generateRandomIndexes( size, bioBubbles.size() );
 		for( int i = 0; i < 10; i++ )
 		{
 			bubbles.add( bioBubbles.get( randIndexes[i] ) );
 			matchBubbles.add( bioMatchBubbles.get( randIndexes[i] ) );
 		}
 
-		int[] randIndexesForTraps = generateRandomIndexesExceptForSelected(trapBubblesSize, bioMatchBubbles.size(),randIndexes);
+		int[] randIndexesForTraps = generateRandomIndexesExceptForSelected( trapBubblesSize, bioMatchBubbles.size(),randIndexes );
 		for( int i = 0; i < trapBubblesSize; i++ )
 		{
-			trapBubbles.add( bioMatchBubbles.get( randIndexesForTraps[i] ) );
+			// fetch half of the trap bubbles from bubbles and other half from matchingBubbles
+			if( i % 2  == 0 )
+				trapBubbles.add( bioBubbles.get( randIndexesForTraps[i] ) );
+			else
+				trapBubbles.add( bioMatchBubbles.get( randIndexesForTraps[i] ) );
 		}
 
 	}
@@ -273,53 +281,72 @@ public class BubbleCollection
 			}
 		}
 
-		int[] randIndexes = generateRandomIndexes(size, chemBubbles.size());
+		int[] randIndexes = generateRandomIndexes( size, chemBubbles.size() );
 		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( chemBubbles.get( randIndexes[i] ) );
 			matchBubbles.add( chemMatchBubbles.get( randIndexes[i] ) );
 		}
 
-		int[] randIndexesForTraps = generateRandomIndexesExceptForSelected(trapBubblesSize, chemMatchBubbles.size(),randIndexes);
+		int[] randIndexesForTraps = generateRandomIndexesExceptForSelected( trapBubblesSize, chemMatchBubbles.size(),randIndexes );
 		for( int i = 0; i < trapBubblesSize; i++ )
 		{
-			trapBubbles.add( chemMatchBubbles.get( randIndexesForTraps[i] ) );
+			// fetch half of the trap bubbles from bubbles and other half from matchingBubbles
+			if( i % 2  == 0 )
+				trapBubbles.add( chemBubbles.get( randIndexesForTraps[i] ) );
+			else
+				trapBubbles.add( chemMatchBubbles.get( randIndexesForTraps[i] ) );
 		}
 	}
 
-	/*generate output_size random integers from a range between 0 to total_size-1*/
-	public int[] generateRandomIndexes(int output_size, int total_size){
-		Random r = new Random(System.currentTimeMillis());
-		HashSet<Integer> randomSet = new HashSet<Integer>(); //to not regenerate the already generated index
+	// generate output_size random integers from a range between 0 to total_size-1
+	public int[] generateRandomIndexes( int output_size, int total_size )
+	{
+		Random r = new Random( System.currentTimeMillis() );
+		HashSet<Integer> randomSet = new HashSet<Integer>(); 
+		
+		// to not regenerate the already generated index
 		// it will keep previously generated numbers
 		int[] randomIndexes = new int[output_size]; // empty array for <output_size> numbers
-		for(int i=0; i<output_size; i++){
-			int x;
-			do{
-				x = r.nextInt(total_size);
-			}while(randomSet.contains(x));
-			randomSet.add(x);
-			randomIndexes[i] = x;
-		}
-		return randomIndexes;
-	}
-	public int[] generateRandomIndexesExceptForSelected(int output_size, int total_size, int[] selected){
-		Random r = new Random(System.currentTimeMillis());
-		HashSet<Integer> randomSet = new HashSet<Integer>();
-		for(int i=0; i<selected.length; i++){	//to not regenerate the already generated index
-			// it will keep previously generated numbers	
-			randomSet.add(selected[i]); // add previously generated numbers from selected[]
-		}
-		int[] randomIndexes = new int[output_size];
-		for(int i=0; i<output_size; i++){
+		for( int i = 0; i < output_size; i++ )
+		{
 			int x;
 			do
 			{
 				x = r.nextInt( total_size );
 			} while( randomSet.contains( x ) );
-			randomSet.add(x);
+			
+			randomSet.add( x );
 			randomIndexes[i] = x;
 		}
+		
+		return randomIndexes;
+	}
+	
+	public int[] generateRandomIndexesExceptForSelected( int output_size, int total_size, int[] selected )
+	{
+		Random r = new Random( System.currentTimeMillis() );
+		HashSet<Integer> randomSet = new HashSet<Integer>();
+		
+		for( int i=0; i < selected.length; i++ )
+		{	
+			// add previously generated numbers from selected[]
+			randomSet.add( selected[i] ); 
+		}
+		
+		int[] randomIndexes = new int[output_size];
+		for( int i = 0; i < output_size; i++ )
+		{
+			int x;
+			do
+			{
+				x = r.nextInt( total_size );
+			} while( randomSet.contains( x ) );
+			
+			randomSet.add( x );
+			randomIndexes[i] = x;
+		}
+		
 		return randomIndexes;
 	}
 

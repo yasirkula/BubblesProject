@@ -14,7 +14,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Timer;
 
 import GameAssets.Bubble;
@@ -475,4 +481,28 @@ public class GameEngine implements ActionListener, MouseListener
 	public void mouseExited( MouseEvent e ){}
 	public void mouseReleased( MouseEvent e ){}
 	// END OF INTERFACE METHODS
+	
+	public static synchronized void playSound( final String url ) 
+	{
+		new Thread( new Runnable() 
+		{
+			// The wrapper thread is unnecessary, unless it blocks on the
+			// Clip finishing; see comments.
+			public void run() 
+			{
+				try 
+				{
+					AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+							new File( url ) );
+					Clip clip = AudioSystem.getClip();
+					clip.open( inputStream );
+					clip.start(); 
+				} 
+				catch( Exception e ) 
+				{
+					System.out.println( e.getMessage() );
+				}
+			}
+		} ).start();
+	}
 }

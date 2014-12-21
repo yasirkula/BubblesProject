@@ -26,7 +26,7 @@ import GameManagement.MenuManager;
 public class HelpMenu extends Menu
 {
 	// CONSTANTS
-	private final String HELP_TEXT = "\nYour aim is to make correct matches with the bubbles. " +
+	private final String HELP_TEXT = "Your aim is to make correct matches with the bubbles. " +
 			 "When you do a correct match these two bubbles will be vanished and a new bubble will pop up. " +
 			 "Each false match will cause you to lose 1 second from your time. If you cannot finish the game " +
 			 "during the time given to you, then game will be over.\n\n" +
