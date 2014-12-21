@@ -124,7 +124,7 @@ public class SettingsMenu extends Menu implements ChangeListener
 		soundLevel.setPaintLabels( true );
 		soundLevel.addChangeListener( this );
 		
-		backButton.setIcon( new ImageIcon( getClass().getResource("/images/BackButton.png") ) );
+		backButton.setIcon( new ImageIcon( "buttons/BackButton.png" ) );
         backButton.setBorderPainted( false );
         backButton.setContentAreaFilled( false );
         backButton.setFocusPainted( false );

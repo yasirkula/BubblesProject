@@ -39,12 +39,13 @@ public class LevelsMenu extends Menu
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
-	public LevelsMenu( EpisodeType episode, int count, int unlocked )
+	public LevelsMenu( EpisodeType episode )
 	{
 		super();
 		
-		levelsCount = count;
-		unlockedLevels = unlocked;
+		levelsCount = MenuManager.LEVEL_COUNT;
+		unlockedLevels = levelsCount - MenuManager.getInstance().getSettings().
+									   getLockedLevelNumber( episode );
 		this.episode = episode;
 		
 		initComponents();
@@ -113,7 +114,7 @@ public class LevelsMenu extends Menu
 		}
         
         backButton = new JButton();
-        backButton.setIcon( new ImageIcon(getClass().getResource("/images/BackButton.png") ) );
+        backButton.setIcon( new ImageIcon( "buttons/BackButton.png" ) );
         backButton.setBorderPainted( false );
         backButton.setContentAreaFilled( false );
         backButton.setFocusPainted( false );

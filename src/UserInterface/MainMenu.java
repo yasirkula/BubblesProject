@@ -55,37 +55,37 @@ public class MainMenu extends Menu
         helpButton = new JButton();
         exitButton = new JButton();
 
-        newGameButton.setIcon( new ImageIcon( getClass().getResource("/images/NewGameButton.png") ) );
+        newGameButton.setIcon( new ImageIcon( "buttons/NewGameButton.png" ) );
         newGameButton.setBorderPainted( false );
         newGameButton.setContentAreaFilled( false );
         newGameButton.setFocusPainted( false );
         newGameButton.addActionListener( this );
 
-        settingsButton.setIcon( new ImageIcon( getClass().getResource("/images/SettingsButton.png") ) );
+        settingsButton.setIcon( new ImageIcon( "buttons/SettingsButton.png" ) );
         settingsButton.setBorderPainted( false );
         settingsButton.setContentAreaFilled( false );
         settingsButton.setFocusPainted( false );
         settingsButton.addActionListener( this );
 
-        creditsButton.setIcon( new ImageIcon( getClass().getResource("/images/CreditsButton.png") ) );
+        creditsButton.setIcon( new ImageIcon( "buttons/CreditsButton.png" ) );
         creditsButton.setBorderPainted( false );
         creditsButton.setContentAreaFilled( false );
         creditsButton.setFocusPainted( false );
         creditsButton.addActionListener( this );
 
-        highscoresButton.setIcon( new ImageIcon( getClass().getResource("/images/HighScoresButton.png") ) );
+        highscoresButton.setIcon( new ImageIcon( "buttons/HighScoresButton.png" ) );
         highscoresButton.setBorderPainted( false );
         highscoresButton.setContentAreaFilled( false );
         highscoresButton.setFocusPainted( false );
         highscoresButton.addActionListener( this );
 
-        helpButton.setIcon( new ImageIcon( getClass().getResource("/images/HelpButton.png") ) );
+        helpButton.setIcon( new ImageIcon( "buttons/HelpButton.png" ) );
         helpButton.setBorderPainted( false );
         helpButton.setContentAreaFilled( false );
         helpButton.setFocusPainted( false );
         helpButton.addActionListener( this );
 
-        exitButton.setIcon( new ImageIcon( getClass().getResource("/images/ExitButton.png") ) );
+        exitButton.setIcon( new ImageIcon( "buttons/ExitButton.png" ) );
         exitButton.setBorderPainted( false );
         exitButton.setContentAreaFilled( false );
         exitButton.setFocusPainted( false );

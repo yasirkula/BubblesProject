@@ -13,6 +13,12 @@
  * periodic table (obviously)
  */
 
+/**
+ * BubbleCollection - A database that fetches bubble data from local disk
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package Database;
 
 import java.io.BufferedReader;
@@ -307,9 +313,10 @@ public class BubbleCollection
 		int[] randomIndexes = new int[output_size];
 		for(int i=0; i<output_size; i++){
 			int x;
-			do{
-				x = r.nextInt(total_size);
-			}while(randomSet.contains(x));
+			do
+			{
+				x = r.nextInt( total_size );
+			} while( randomSet.contains( x ) );
 			randomSet.add(x);
 			randomIndexes[i] = x;
 		}

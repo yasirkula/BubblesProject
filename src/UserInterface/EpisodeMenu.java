@@ -1,3 +1,9 @@
+/**
+ * EpisodeMenu - Draws episodes as clickable buttons
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -12,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import GameAssets.EpisodeType;
 import GameManagement.MenuManager;
 
 public class EpisodeMenu extends Menu
@@ -40,6 +47,8 @@ public class EpisodeMenu extends Menu
 		middlePanel.add( chemButton );
 		middlePanel.add( vocabButton );
 		
+		// put some white space at the edges so that interface
+				// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -72,7 +81,7 @@ public class EpisodeMenu extends Menu
         chemButton.setBackground( new Color( 174, 255, 157 ) );
         vocabButton.setBackground( new Color( 240, 255, 157 ) );
         
-        backButton.setIcon( new ImageIcon( getClass().getResource("/images/BackButton.png") ) );
+        backButton.setIcon( new ImageIcon( "buttons/BackButton.png" ) );
         backButton.setBorderPainted( false );
         backButton.setContentAreaFilled( false );
         backButton.setFocusPainted( false );
@@ -91,18 +100,15 @@ public class EpisodeMenu extends Menu
 		}
 		else if( e.getSource() == bioButton )
 		{
-			MenuManager.getInstance().changeMenu( 
-					new LevelsMenu( "Biology", MenuManager.LEVEL_COUNT, MenuManager.LEVEL_COUNT - MenuManager.getInstance().getSettings().lockedLevelNumberForBio ) );
+			MenuManager.getInstance().changeMenu( new LevelsMenu( EpisodeType.BIOLOGY ) );
 		}
 		else if( e.getSource() == chemButton )
 		{
-			MenuManager.getInstance().changeMenu( 
-					new LevelsMenu( "Chemistry", MenuManager.LEVEL_COUNT,  MenuManager.LEVEL_COUNT - MenuManager.getInstance().getSettings().lockedLevelNumberForChem ) );
+			MenuManager.getInstance().changeMenu( new LevelsMenu( EpisodeType.CHEMISTRY ) );
 		}
 		else if( e.getSource() == vocabButton )
 		{
-			MenuManager.getInstance().changeMenu( 
-					new LevelsMenu( "Vocabulary", MenuManager.LEVEL_COUNT,  MenuManager.LEVEL_COUNT - MenuManager.getInstance().getSettings().lockedLevelNumberForVocab ) );
+			MenuManager.getInstance().changeMenu( new LevelsMenu( EpisodeType.VOCABULARY ) );
 		}
 	}
 	// END OF OTHER METHODS
