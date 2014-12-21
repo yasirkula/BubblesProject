@@ -6,6 +6,7 @@
 
 package UserInterface;
 
+import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
 import javax.swing.JButton;
@@ -96,22 +97,27 @@ public class MainMenu extends Menu
 	{
         if( e.getSource() == newGameButton )
         {
+        	GameEngine.playSound( "sounds/ahem.wav" );
         	MenuManager.getInstance().changeMenu( new EpisodeMenu() );
         }
         else if( e.getSource() == settingsButton )
         {
+        	GameEngine.playSound( "sounds/ahem.wav" );
         	MenuManager.getInstance().changeMenu( new SettingsMenu() );
         }
         else if( e.getSource() == creditsButton )
         {
+        	GameEngine.playSound( "sounds/ahem.wav" );
         	MenuManager.getInstance().changeMenu( new CreditsMenu() );
         }
         else if( e.getSource() == highscoresButton )
         {
+        	GameEngine.playSound( "sounds/ahem.wav" );
         	MenuManager.getInstance().changeMenu( new HighScoresMenu() );
         }
         else if( e.getSource() == helpButton )
         {
+        	GameEngine.playSound( "sounds/ahem.wav" );
         	MenuManager.getInstance().changeMenu( new HelpMenu( false ) );
         }
         else if( e.getSource() == exitButton )
