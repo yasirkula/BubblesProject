@@ -260,7 +260,10 @@ public class HighScores
 			catch( Exception ex ){}
 		}
 		
+		// split highscores for each episode (mode) into separate Strings
+		// using regular expressions
 		String[] modes = result.split( "\\s*(MODE:)\\s*" );
+		
 		// skip the first element in modes, which is the part before
 		// the first MODE: text
 		for( int i = 1; i < modes.length; i++ )
