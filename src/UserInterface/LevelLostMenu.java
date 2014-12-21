@@ -1,3 +1,9 @@
+/**
+ * LevelLostMenu - Draws the level lost screen
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -49,6 +55,8 @@ public class LevelLostMenu extends Menu
 		middlePanel.add( restartButton );
 		middlePanel.add( exitButton );
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 250, 50 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -85,6 +93,7 @@ public class LevelLostMenu extends Menu
 	{
 		if( e.getSource() == restartButton )
 		{
+			// restart the current level
 			GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(), 
 					GameEngine.getInstance().getLevelID() );
 		}

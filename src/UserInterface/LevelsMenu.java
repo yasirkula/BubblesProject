@@ -1,3 +1,10 @@
+/**
+ * LevelsMenu - Draws each level of an episode 
+ * 				as a clickable button
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -12,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import GameAssets.EpisodeType;
 import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
@@ -27,11 +35,11 @@ public class LevelsMenu extends Menu
     
 	private int levelsCount = 0;
 	private int unlockedLevels = 0;          
-    private String episode;
+    private EpisodeType episode;
 	// END OF VARIABLES
 	
 	// CONSTRUCTORS
-	public LevelsMenu( String episode, int count, int unlocked )
+	public LevelsMenu( EpisodeType episode, int count, int unlocked )
 	{
 		super();
 		
@@ -59,6 +67,8 @@ public class LevelsMenu extends Menu
 			middlePanel.add( b );
 		}
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -126,11 +136,10 @@ public class LevelsMenu extends Menu
         	{
         		if( i < unlockedLevels )
         		{
+        			// the level user selected is unlocked,
+        			// so launch that level and hope that user enjoys
+        			// their stay!
         			GameEngine.getInstance().initializeLevel( episode, i + 1 );
-        		}
-        		else
-        		{
-        			
         		}
         	}
         }

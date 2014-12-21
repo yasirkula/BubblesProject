@@ -13,6 +13,12 @@
  * periodic table (obviously)
  */
 
+/**
+ * BubbleCollection - A database that fetches bubble data from local disk
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package Database;
 
 import java.io.BufferedReader;
@@ -224,7 +230,7 @@ public class BubbleCollection
 			}
 		}
 		
-		for( int i = 0; i < 20; i++ )
+		for( int i = 0; i < size; i++ )
 		{
 			bubbles.add( bioBubbles.get( i ) );
 			matchBubbles.add( bioMatchBubbles.get( i ) );
@@ -256,7 +262,7 @@ public class BubbleCollection
 		}
 	}
 	
-	public Content getContent( ContentType type )
+	private Content getContent( ContentType type )
 	{
 		return factory.getContent( type );
 	}

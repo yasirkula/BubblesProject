@@ -1,3 +1,10 @@
+/**
+ * TextContent - A content that stores a String and draws it 
+ * 				 on screen
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package GameAssets;
 
 import java.awt.BasicStroke;
@@ -43,6 +50,7 @@ public class TextContent implements Content
 		// used a code segment from: http://www.coderanch.com/t
 		//							 /336616/GUI/java/Center-Align-text-drawString
 		// by kyle amburn
+		// Draw the text at horizontally and vertically center of the Bubble
 		Graphics2D g2D = (Graphics2D) g;
 		Rectangle2D bounds = g2D.getFontMetrics().getStringBounds( text, g2D );
 		int stringXPos = b.getX() + Bubble.getRadius() - (int)( bounds.getWidth() / 2 );

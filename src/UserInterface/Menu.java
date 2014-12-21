@@ -1,3 +1,9 @@
+/**
+ * Menu - An abstract class to represent a menu
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.Color;
@@ -19,6 +25,7 @@ public abstract class Menu extends JPanel implements ActionListener
 	{
 		initComponents();
 		
+		// get the background color from SettingsManager
 		setBackground( MenuManager.getInstance().getSettings().getBackgroundColor() );
 	}
 	// END OF CONSTRUCTORS
@@ -26,7 +33,7 @@ public abstract class Menu extends JPanel implements ActionListener
 	// OTHER METHODS
 	public void paintComponent( Graphics g )
 	{
-		// Gradient background
+		// Draw gradient background color
 		// Inspired from: http://stackoverflow.com/questions/12220853/how
 		//				  -to-make-the-background-gradient-of-a-jpanel
 		// answered by: trashgod

@@ -1,3 +1,9 @@
+/**
+ * PauseMenu - Draws the pause menu
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -41,6 +47,8 @@ public class PauseMenu extends Menu
 		middlePanel.add( helpButton );
 		middlePanel.add( exitButton );
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 250, 50 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -85,10 +93,12 @@ public class PauseMenu extends Menu
 	{
 		if( e.getSource() == resumeButton )
 		{
+			// resume the game
 			GameEngine.getInstance().resume();
 		}
 		else if( e.getSource() == restartButton )
 		{
+			// restart the current level
 			GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(),
 					GameEngine.getInstance().getLevelID() );
 		}

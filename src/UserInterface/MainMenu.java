@@ -1,3 +1,9 @@
+/**
+ * MainMenu - Draws the main menu
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import GameManagement.MenuManager;

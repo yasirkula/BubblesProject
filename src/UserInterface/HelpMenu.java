@@ -1,3 +1,9 @@
+/**
+ * HelpMenu - Draws the help text in a pane
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -42,6 +48,8 @@ public class HelpMenu extends Menu
 		BorderLayout layout = new BorderLayout( 0, 25 );
 		setLayout( layout );
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -91,6 +99,8 @@ public class HelpMenu extends Menu
 	{
 		if( e.getSource() == backButton )
 		{
+			// if the game was paused, return to pause menu,
+			// otherwise return to main menu
 			if( !isGamePaused )
 				MenuManager.getInstance().changeMenu( new MainMenu() );
 			else

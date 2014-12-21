@@ -1,3 +1,10 @@
+/**
+ * ContentFactory - A factory classes that creates Contents
+ * 					for us to use
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package GameAssets;
 
 public class ContentFactory

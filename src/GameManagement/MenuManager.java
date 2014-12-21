@@ -1,3 +1,11 @@
+/**
+ * GameEngine - When user is strolling the menus
+ * 				it is MenuManager's role to keep track of
+ * 				menu transitions
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package GameManagement;
 
 import Driver.Driver;
@@ -12,6 +20,7 @@ public class MenuManager
 	// END OF CONSTANTS
 	
 	// VARIABLES
+	// Singleton instance
 	private static MenuManager instance = null;
 	
 	private SettingsManager settings;
@@ -23,6 +32,7 @@ public class MenuManager
 	{
 		instance = this;
 		
+		// initialize the databases
 		settings = new SettingsManager();
 		scores = new HighScores();
 	}
@@ -31,6 +41,8 @@ public class MenuManager
 	// MUTATOR - ACCESSOR METHODS
 	public static MenuManager getInstance()
 	{
+		// return the singleton instance
+		// if it does not exist, first initialize the instance
 		if( instance == null )
 			instance = new MenuManager();
 		
@@ -51,11 +63,13 @@ public class MenuManager
 	// OTHER METHODS
 	public void changeMenu( Menu m )
 	{
+		// transition between menus
 		Driver.changeActivePanel( m );
 	}
 	
 	public void exitGame()
 	{
+		// exit the game
 		System.exit(0);
 	}
 	// END OF OTHER METHODS

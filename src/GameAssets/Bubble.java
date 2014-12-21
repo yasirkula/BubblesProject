@@ -1,3 +1,10 @@
+/**
+ * Bubble - Stores all properties of a bubble like position
+ * 			and content
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package GameAssets;
 
 import java.awt.Graphics;
@@ -22,9 +29,12 @@ public class Bubble
 	// CONSTRUCTORS
 	public Bubble( Content c )
 	{
+		// initialize variables to default values
 		content = c;
 		xPos = 0;
 		yPos = 0;
+		
+		// give bubble a random light color
 		bubbleColor = new Color( 170 + (int)( Math.random() * 85 ),
     			170 + (int)( Math.random() * 85 ), 170 + (int)( Math.random() * 85 ) );
 	}
@@ -63,6 +73,7 @@ public class Bubble
 	
 	public Point getCenterPoint()
 	{
+		// returns the center point of the bubble on screen
 		return new Point( xPos + RADIUS, yPos + RADIUS );
 	}
 	
@@ -92,6 +103,7 @@ public class Bubble
 	
 	public boolean contains( Point mousePos )
 	{
+		// returns whether Bubble contains the position of the mouse inside or not
 		Ellipse2D.Float shape = new Ellipse2D.Float( xPos, yPos, DIAMETER, DIAMETER );
 
 		if( shape.contains( mousePos ) )

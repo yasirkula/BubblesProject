@@ -1,3 +1,10 @@
+/**
+ * SettingsManager - A database that fetches stored settings from local disk
+ * 					 and writes them back when necessary
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package Database;
 
 import java.awt.Color;
@@ -71,6 +78,7 @@ public class SettingsManager
 		        
 		        if( tokens[0].equals( "Sound" ) )
 		        {
+		        	// try to fetch sound level setting
 		        	try
 		        	{
 		        		soundLevel = Integer.parseInt( tokens[1] ) / 100f;
@@ -79,6 +87,7 @@ public class SettingsManager
 		        }
 		        else if( tokens[0].equals( "Bg" ) )
 		        {
+		        	// try to fetch background color setting
 		        	try
 		        	{
 		        		for( int i = 0; i < tokens.length; i++ )

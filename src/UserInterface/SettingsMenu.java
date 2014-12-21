@@ -1,3 +1,12 @@
+/**
+ * SettingsMenu - Draws the settings menu where
+ * 				  several settings can be changed and
+ * 				  SettingsManager can be notified of
+ * 				  these changes
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -70,6 +79,8 @@ public class SettingsMenu extends Menu implements ChangeListener
 		
 		centerPanel.setBorder( BorderFactory.createEtchedBorder( EtchedBorder.LOWERED ) );
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -103,7 +114,6 @@ public class SettingsMenu extends Menu implements ChangeListener
 		}
 		colorPicker.setChooserPanels( colorPickerPanels );
 		
-		
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put( new Integer( 0 ), new JLabel( "SILENT" ) );
 		labelTable.put( new Integer( 100 ), new JLabel( "LOUD" ) );
@@ -127,7 +137,7 @@ public class SettingsMenu extends Menu implements ChangeListener
 		{
 			// save settings and return to main menu
 			MenuManager.getInstance().getSettings().writeSettings();
-    		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
+    		MenuManager.getInstance().changeMenu( new MainMenu() );
 		}
 	}
 	
@@ -135,10 +145,12 @@ public class SettingsMenu extends Menu implements ChangeListener
 	{
 		if( e.getSource() == soundLevel )
 		{
+			// sound level is changed, notify the settings manager
 			MenuManager.getInstance().getSettings().setSoundLevel( soundLevel.getValue() / 100f );
 		}
 		else if( e.getSource() == colorPicker.getSelectionModel() )
 		{
+			// background color is changed, notify the settings manager
 			Color c = colorPicker.getColor();
 			MenuManager.getInstance().getSettings().setBackgroundColor( c );
 			setBackground( c );

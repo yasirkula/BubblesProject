@@ -1,3 +1,11 @@
+/**
+ * GameEngine - When user is not strolling the menus
+ * 				but playing the game, it is GameEngine's
+ * 				role to keep track of every important detail
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package GameManagement;
 
 import java.util.ArrayList;
@@ -10,6 +18,7 @@ import java.awt.event.MouseListener;
 import javax.swing.Timer;
 
 import GameAssets.Bubble;
+import GameAssets.EpisodeType;
 import GameAssets.PointFactory;
 import Database.SettingsManager;
 import Database.BubbleCollection;
@@ -32,13 +41,14 @@ public class GameEngine implements ActionListener, MouseListener
 	// END OF CONSTANTS
 	
 	// VARIABLES
+	// Singleton instance
 	private static GameEngine instance = null;
 	
 	private Timer timer;
 	private int time;
 	private int score;
 	private int levelID;
-	private String episode;
+	private EpisodeType episode;
 	private ArrayList<Bubble> bubbles;
 	private ArrayList<Bubble> matchingBubbles;
 	private ArrayList<Bubble> trapBubbles;
@@ -52,6 +62,8 @@ public class GameEngine implements ActionListener, MouseListener
 	// CONSTRUCTORS
 	public GameEngine()
 	{
+		// Initialize the objects that only needs to be
+		// initialized once
 		settings = MenuManager.getInstance().getSettings();
 		bubbleCollection = new BubbleCollection();
 		bubblePositionFactory = new PointFactory();
@@ -62,6 +74,8 @@ public class GameEngine implements ActionListener, MouseListener
 	// MUTATOR - ACCESSOR METHODS
 	public static GameEngine getInstance()
 	{
+		// return the singleton instance
+		// if it does not exist, first initialize the instance
 		if( instance == null )
 			instance = new GameEngine();
 		
@@ -83,7 +97,7 @@ public class GameEngine implements ActionListener, MouseListener
 		return levelID;
 	}
 	
-	public String getEpisode()
+	public EpisodeType getEpisode()
 	{
 		return episode;
 	}
@@ -98,11 +112,6 @@ public class GameEngine implements ActionListener, MouseListener
 		return bubbles;
 	}
 	
-	public Bubble getSelectedBubble()
-	{
-		return selectedBubble;
-	}
-	
 	public ArrayList<Bubble> getMatchingBubbles()
 	{
 		return matchingBubbles;
@@ -111,6 +120,11 @@ public class GameEngine implements ActionListener, MouseListener
 	public ArrayList<Bubble> getTrapBubbles()
 	{
 		return trapBubbles;
+	}
+	
+	public Bubble getSelectedBubble()
+	{
+		return selectedBubble;
 	}
 	
 	public void changeScore( int deltaValue )
@@ -125,12 +139,18 @@ public class GameEngine implements ActionListener, MouseListener
 	// END OF MUTATOR - ACCESSOR METHODS
 	
 	// OTHER METHODS
-	public void initializeLevel( String episode, int levelID )
+	public void initializeLevel( EpisodeType episode, int levelID )
 	{
+		// if we are restarting the level, make sure that
+		// previous timer is stopped so that it no more generates
+		// actions on this ActionListener (i.e. GameEngine)
 		if( timer != null )
 			timer.stop();
 		
+		// initialize the timer and have it generate an action
+		// once a second (1000 miliseconds)
 		timer = new Timer( 1000, this );
+		
 		time = INITIAL_TIME;
 		score = 0;
 		selectedBubble = null;
@@ -145,41 +165,48 @@ public class GameEngine implements ActionListener, MouseListener
 		matchingBubbles = new ArrayList<Bubble>();
 		trapBubbles = new ArrayList<Bubble>();
 		
-		if( episode.equalsIgnoreCase( "Vocabulary" ) )
+		switch( episode )
 		{
-			// note that levelID starts from 1, not 0!
-			bubbleCollection.getVocabBubbles( 
-					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
-					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
-					bubbles, matchingBubbles, trapBubbles );
-		}
-		else if( episode.equalsIgnoreCase( "Biology" ) )
-		{
-			// note that levelID starts from 1, not 0!
-			bubbleCollection.getBioBubbles( 
-					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
-					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
-					bubbles, matchingBubbles, trapBubbles );
-		}
-		else
-		{
-			// note that levelID starts from 1, not 0!
-			bubbleCollection.getChemBubbles( 
-					MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
-					MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
-					bubbles, matchingBubbles, trapBubbles );
+			case VOCABULARY:
+				// note that levelID starts from 1, not 0!
+				bubbleCollection.getVocabBubbles( 
+						MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
+						MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
+						bubbles, matchingBubbles, trapBubbles );
+				break;
+			case BIOLOGY:
+				// note that levelID starts from 1, not 0!
+				bubbleCollection.getBioBubbles( 
+						MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
+						MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
+						bubbles, matchingBubbles, trapBubbles );
+				break;
+			case CHEMISTRY:
+				// note that levelID starts from 1, not 0!
+				bubbleCollection.getChemBubbles( 
+						MINIMUM_BUBBLES + ( levelID - 1 ) * BUBBLE_INCREMENT_AMOUNT, 
+						MINIMUM_TRAP_BUBBLES + ( levelID - 1 ) * TRAP_BUBBLE_INCREMENT_AMOUNT,
+						bubbles, matchingBubbles, trapBubbles );
+				break;
 		}
 		
+		// initialize the cell factory so that each cell (grid)
+		// is considered free
+		// (to understand how random positioning works, read
+		// the description on PointFactory class)
 		bubblePositionFactory.initialize();
 		
+		// randomly place the bubbles on screen
 		randomizeBubblePositions();
+		
+		// Tick tack!
 		timer.start();
 	}
 	
 	private void randomizeBubblePositions()
 	{
-		// reposition the bubbles so that they don't overlap
-		// do the repositioning randomly
+		// reposition the bubbles randomly
+		// reposition all the bubbles inside the bubbles ArrayList
 		for( Bubble b : bubbles )
 		{
 			Point p = bubblePositionFactory.getRandomBubblePosition();
@@ -190,6 +217,8 @@ public class GameEngine implements ActionListener, MouseListener
 		// others will pop as player match bubbles
 		// randomIndex: index of the first matching bubble that will
 		// appear on screen when game starts
+		// offset: the amount of pixels to move the other matching bubbles
+		// so that they are outside of the game screen
 		int randomIndex = (int)( Math.random() * matchingBubbles.size() );
 		int offset = -2 * Bubble.getRadius() - 10;
 		
@@ -206,6 +235,7 @@ public class GameEngine implements ActionListener, MouseListener
 			}
 		}
 		
+		// reposition all the bubbles inside the trapBubbles ArrayList
 		for( Bubble b : trapBubbles )
 		{
 			Point p = bubblePositionFactory.getRandomBubblePosition();
@@ -215,12 +245,14 @@ public class GameEngine implements ActionListener, MouseListener
 	
 	public void pause()
 	{
+		// pause the timer and go to pause menu
 		timer.stop();
 		Driver.changeActivePanel( new PauseMenu() );
 	}
 	
 	public void resume()
 	{
+		// resume the timer and return to game screen
 		timer.start();
 		Driver.changeActivePanel( UI );
 	}
@@ -230,9 +262,10 @@ public class GameEngine implements ActionListener, MouseListener
 		// There is no valid bubble left on the screen, game is won
 		timer.stop();
 		
-		// increment the score proportional to remaining time
+		// increment the score proportional to the remaining time
 		score += time * SCORE_INCREMENT_AMOUNT_BY_REMAINING_TIME;
 		
+		// go to win screen
 		MenuManager.getInstance().changeMenu( new LevelCompleteMenu() );
 	}
 	
@@ -241,6 +274,7 @@ public class GameEngine implements ActionListener, MouseListener
 		// Timer reached 0, game is lost
 		timer.stop();
 		
+		// go to game lost screen
 		MenuManager.getInstance().changeMenu( new LevelLostMenu() );
 	}
 	
@@ -281,11 +315,14 @@ public class GameEngine implements ActionListener, MouseListener
 						// increment score
 						score += SCORE_INCREMENT_AMOUNT_BY_MATCH;
 						
-						// if there is no valid bubble left, game is won
 						if( bubbles.size() == 0 )
+						{
+							// if there is no valid bubble left, game is won
 							gameWon();
+						}
 						else
 						{
+							// otherwise pop a new matching bubble
 							int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
 							Point p = bubblePositionFactory.getRandomBubblePosition();
 							matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
@@ -315,11 +352,14 @@ public class GameEngine implements ActionListener, MouseListener
 						// increment score
 						score += SCORE_INCREMENT_AMOUNT_BY_MATCH;
 						
-						// if there is no valid bubble left, game is won
 						if( bubbles.size() == 0 )
+						{
+							// if there is no valid bubble left, game is won
 							gameWon();
+						}
 						else
 						{
+							// otherwise pop a new matching bubble
 							int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
 							Point p = bubblePositionFactory.getRandomBubblePosition();
 							matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
@@ -332,7 +372,9 @@ public class GameEngine implements ActionListener, MouseListener
 						time--;
 					}
 				}
-				
+
+				// a match (either correct or wrong) is made, make selectedBubble null so
+				// that a new match can be made between any other bubbles
 				selectedBubble = null;
 			}
 		}
@@ -342,16 +384,21 @@ public class GameEngine implements ActionListener, MouseListener
 	// INTERFACE METHODS
 	public void actionPerformed( ActionEvent e )
 	{
-		// called once a second by the Timer
-		time -= 1;
-		
-		if( time <= 0 )
+		if( e.getSource() == timer )
 		{
-			gameLost();
-		}
-		else
-		{
-			UI.repaint();
+			// called once a second by the Timer
+			time -= 1;
+			
+			if( time <= 0 )
+			{
+				// Ouch!
+				gameLost();
+			}
+			else
+			{
+				// repaint the game screen so that time on screen is refreshed
+				UI.repaint();
+			}
 		}
 	}
 	
@@ -364,6 +411,7 @@ public class GameEngine implements ActionListener, MouseListener
 		{
 			if( bubbles.get( i ).contains( e.getPoint() ) )
 			{
+				// if mouse position is inside this bubble
 				bubbleFound = true;
 				clickedBubble( bubbles.get( i ) );
 			}
@@ -373,6 +421,7 @@ public class GameEngine implements ActionListener, MouseListener
 		{
 			if( matchingBubbles.get( i ).contains( e.getPoint() ) )
 			{
+				// if mouse position is inside this bubble
 				bubbleFound = true;
 				clickedBubble( matchingBubbles.get( i ) );
 			}
@@ -382,18 +431,20 @@ public class GameEngine implements ActionListener, MouseListener
 		{
 			if( trapBubbles.get( i ).contains( e.getPoint() ) )
 			{
+				// if mouse position is inside this bubble
 				bubbleFound = true;
 				clickedBubble( trapBubbles.get( i ) );
 			}
 		}
 		
-		// If user did not press on a bubble
 		if( !bubbleFound )
 		{
-			// deselect the currently selected bubble
+			// If user did not press on a bubble, deselect
+			// the currently selected bubble
 			selectedBubble = null;
 		}
 		
+		// repaint the UI
 		UI.setMousePos( e.getPoint() );
 		UI.repaint();
 	}

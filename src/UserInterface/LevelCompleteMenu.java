@@ -1,3 +1,9 @@
+/**
+ * LevelCompleteMenu - Draws the level complete screen
+ * 
+ * @author CS319 - Section 2 - Group 9
+ */
+
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -69,6 +75,8 @@ public class LevelCompleteMenu extends Menu
 		middlePanel.add( nextLevelButton );
 		middlePanel.add( exitButton );
 		
+		// put some white space at the edges so that interface
+		// looks nicer
 		Dimension gap = new Dimension( 250, 50 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -111,10 +119,13 @@ public class LevelCompleteMenu extends Menu
 		{
 			if( GameEngine.getInstance().getLevelID() >= MenuManager.LEVEL_COUNT )
 			{
+				// if it was the last level of this episode,
+				// return to main menu
 				MenuManager.getInstance().changeMenu( new MainMenu() );
 			}
 			else
 			{
+				// go to the next level in this episode
 				GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(), 
 						GameEngine.getInstance().getLevelID() + 1 );
 			}
