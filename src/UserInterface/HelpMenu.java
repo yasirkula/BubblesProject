@@ -1,9 +1,3 @@
-/**
- * HelpMenu - Draws the help text in a pane
- * 
- * @author CS319 - Section 2 - Group 9
- */
-
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -26,10 +20,16 @@ import GameManagement.MenuManager;
 public class HelpMenu extends Menu
 {
 	// CONSTANTS
-	private final String HELP_TEXT = "\nSuch help document\n\n" +
-			 "many content\n\n" +
-			 "so helpful\n\n" +
-			 "wow\n";
+	private final String HELP_TEXT = "\nYour aim is to make correct matches with the bubbles. When you do a correct match these two bubbles will be vanished and a new bubble will pop up. Each false match will cause you to lose 1 second from your time. If you cannot finish the game during the time given to you, then game will be over.\n\n" +
+			 "Here are the particular tips for each parts of the game:\n\n" +
+			 "BIOLOGY:\n\n" +
+			 "You will match the bubble containing animal picture with the bubble that contains corresponding name in it.\n\n" 
+			 +"CHEMISTRY: \n\n"
+			 + "You will be matching element symbols from the periodic table with their names.\n\n"
+			 +"VOCABULARY: \n\n"
+			 +"You will be matching antonyms words.";
+	
+	
 	// END OF CONSTANTS
 	
 	// VARIABLES
@@ -48,8 +48,6 @@ public class HelpMenu extends Menu
 		BorderLayout layout = new BorderLayout( 0, 25 );
 		setLayout( layout );
 		
-		// put some white space at the edges so that interface
-		// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -99,8 +97,6 @@ public class HelpMenu extends Menu
 	{
 		if( e.getSource() == backButton )
 		{
-			// if the game was paused, return to pause menu,
-			// otherwise return to main menu
 			if( !isGamePaused )
 				MenuManager.getInstance().changeMenu( new MainMenu() );
 			else
