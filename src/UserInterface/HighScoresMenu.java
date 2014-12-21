@@ -174,8 +174,21 @@ public class HighScoresMenu extends Menu
     		MenuManager.getInstance().changeMenu( new MainMenu() );
 		else if( e.getSource() == resetButton ) 
 		{
-			// reset highscores
-			MenuManager.getInstance().getScores().resetHighScores();
+			if( currentlyShownEpisode == EpisodeType.BIOLOGY )
+			{
+				MenuManager.getInstance().getScores().resetBioScores();
+				//showScoresOf( currentlyShownEpisode );
+			}
+			else if( currentlyShownEpisode == EpisodeType.CHEMISTRY)
+			{
+				MenuManager.getInstance().getScores().resetChemScores();
+				//showScoresOf( currentlyShownEpisode );
+			}
+			else if( currentlyShownEpisode == EpisodeType.VOCABULARY)
+			{
+				MenuManager.getInstance().getScores().resetVocabScores();
+				//showScoresOf( currentlyShownEpisode );
+			}
 			
 			// refresh the highscores table
 			showScoresOf( currentlyShownEpisode );

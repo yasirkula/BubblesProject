@@ -151,30 +151,44 @@ public class HighScores
 				break;
 		}
 	}
-	
-	public void resetHighScores()
+	public void resetBioScores()
 	{
-		// reset all highscores to 0
 		bioNames = new ArrayList<String>();
 		bioScores = new ArrayList<Integer>();
-		chemNames = new ArrayList<String>();
-		chemScores = new ArrayList<Integer>();
-		vocabNames = new ArrayList<String>();
-		vocabScores = new ArrayList<Integer>();
 		
 		for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
 		{
 			bioNames.add( "MysteriousPerson" );
 			bioScores.add( 0 );
+		}
+		saveHighScores();
+	}
+	public void resetChemScores()
+	{
+		chemNames = new ArrayList<String>();
+		chemScores = new ArrayList<Integer>();
+		
+		for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
+		{
 			chemNames.add( "MysteriousPerson" );
 			chemScores.add( 0 );
+		}
+		saveHighScores();
+	}
+	public void resetVocabScores()
+	{
+		vocabNames = new ArrayList<String>();
+		vocabScores = new ArrayList<Integer>();
+		
+		for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
+		{
 			vocabNames.add( "MysteriousPerson" );
 			vocabScores.add( 0 );
 		}
-		
-		// save changes to disk
 		saveHighScores();
 	}
+	
+		
 	
 	public void saveHighScores()
 	{
