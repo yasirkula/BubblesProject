@@ -117,6 +117,8 @@ public class LevelCompleteMenu extends Menu
 	{
 		if( e.getSource() == nextLevelButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			// highscore table does not support white space
 			String name = nameInput.getText();
 			name = name.replace( " ", "" );
@@ -139,6 +141,8 @@ public class LevelCompleteMenu extends Menu
 		}
 		else if( e.getSource() == exitButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			// highscore table does not support white space
 			String name = nameInput.getText();
 			name = name.replace( " ", "" );

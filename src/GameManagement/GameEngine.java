@@ -15,12 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.Timer;
 
 import GameAssets.Bubble;
@@ -265,6 +264,8 @@ public class GameEngine implements ActionListener, MouseListener
 
 	public void gameWon()
 	{
+		playSound( "sounds/gameWon.wav" );
+		
 		// There is no valid bubble left on the screen, game is won
 		timer.stop();
 
@@ -303,6 +304,8 @@ public class GameEngine implements ActionListener, MouseListener
 
 	public void gameLost()
 	{
+		playSound( "sounds/gameLost.wav" );
+		
 		// Timer reached 0, game is lost
 		timer.stop();
 
@@ -337,6 +340,8 @@ public class GameEngine implements ActionListener, MouseListener
 					// selected bubble is in the bubbles list
 					if( matchingBubbles.indexOf( b ) == bubbleIndex )
 					{
+						playSound( "sounds/bubbleMatch.wav" );
+						
 						// we have a match!
 						// remove matching bubbles from game field
 						bubblePositionFactory.freeCell( bubbles.get( bubbleIndex ).getCenterPoint() );
@@ -360,6 +365,8 @@ public class GameEngine implements ActionListener, MouseListener
 					}
 					else
 					{
+						playSound( "sounds/bubbleWrongMatch.wav" );
+						
 						// wrong match
 						// decrement time by 1
 						time--;
@@ -367,34 +374,50 @@ public class GameEngine implements ActionListener, MouseListener
 				}
 				else
 				{
-					// selected bubble is in the matchingBubbles list
 					bubbleIndex = matchingBubbles.indexOf( selectedBubble );
-
-					if( bubbles.indexOf( b ) == bubbleIndex )
+					
+					if( bubbleIndex != -1 )
 					{
-						// we have a match!
-						// remove matching bubbles from game field
-						bubblePositionFactory.freeCell( bubbles.get( bubbleIndex ).getCenterPoint() );
-						bubblePositionFactory.freeCell( matchingBubbles.get( bubbleIndex ).getCenterPoint() );
-						bubbles.remove( bubbleIndex );
-						matchingBubbles.remove( bubbleIndex );
-
-						// increment score
-						score += SCORE_INCREMENT_AMOUNT_BY_MATCH;
-
-						// if there is no valid bubble left, game is won
-						if( bubbles.size() == 0 )
-							gameWon();
+						// selected bubble is in the matchingBubbles list
+						if( bubbles.indexOf( b ) == bubbleIndex )
+						{
+							playSound( "sounds/bubbleMatch.wav" );
+							
+							// we have a match!
+							// remove matching bubbles from game field
+							bubblePositionFactory.freeCell( bubbles.get( bubbleIndex ).getCenterPoint() );
+							bubblePositionFactory.freeCell( matchingBubbles.get( bubbleIndex ).getCenterPoint() );
+							bubbles.remove( bubbleIndex );
+							matchingBubbles.remove( bubbleIndex );
+	
+							// increment score
+							score += SCORE_INCREMENT_AMOUNT_BY_MATCH;
+	
+							// if there is no valid bubble left, game is won
+							if( bubbles.size() == 0 )
+								gameWon();
+							else
+							{
+								// otherwise pop a new matching bubble
+								int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
+								Point p = bubblePositionFactory.getRandomBubblePosition();
+								matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
+							}
+						}
 						else
 						{
-							// otherwise pop a new matching bubble
-							int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
-							Point p = bubblePositionFactory.getRandomBubblePosition();
-							matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
+							playSound( "sounds/bubbleWrongMatch.wav" );
+							
+							// wrong match
+							// decrement time by 1
+							time--;
 						}
 					}
 					else
 					{
+						// selected bubble is in the trapBubbles list
+						playSound( "sounds/bubbleWrongMatch.wav" );
+						
 						// wrong match
 						// decrement time by 1
 						time--;
@@ -408,11 +431,15 @@ public class GameEngine implements ActionListener, MouseListener
 		}
 	}
 	
-	public static synchronized void playSound( final String url ) 
+	public synchronized void playSound( final String url ) 
 	{
 		// inspired from: http://stackoverflow.com/questions/20354508/sound-effects-in-java
 		// answered by: Batuhan Bardak
 		// plays an audio clip synchronously
+		//
+		// also inspired from: http://stackoverflow.com/questions/953598/
+		//					   audio-volume-control-increase-or-decrease-in-java
+		// answered by: markusk
 		new Thread( new Runnable() 
 		{
 			public void run() 
@@ -423,6 +450,13 @@ public class GameEngine implements ActionListener, MouseListener
 							new File( url ) );
 					Clip clip = AudioSystem.getClip();
 					clip.open( inputStream );
+					
+					// set the sound level
+					FloatControl gainControl = ( FloatControl ) clip.getControl( FloatControl.Type.MASTER_GAIN );
+					float decibelDiff = gainControl.getMaximum() - gainControl.getMinimum();
+					float soundLevel = gainControl.getMinimum() + decibelDiff * settings.getSoundLevel();
+					gainControl.setValue( soundLevel );
+
 					clip.start(); 
 				} 
 				catch( Exception e ) 

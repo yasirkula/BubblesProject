@@ -93,21 +93,29 @@ public class PauseMenu extends Menu
 	{
 		if( e.getSource() == resumeButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			// resume the game
 			GameEngine.getInstance().resume();
 		}
 		else if( e.getSource() == restartButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			// restart the current level
 			GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(),
 					GameEngine.getInstance().getLevelID() );
 		}
 		else if( e.getSource() == helpButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			MenuManager.getInstance().changeMenu( new HelpMenu( true ) );
 		}
 		else if( e.getSource() == exitButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			MenuManager.getInstance().changeMenu( new MainMenu() );
 		}
 	}

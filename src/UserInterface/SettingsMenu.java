@@ -31,6 +31,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
 public class SettingsMenu extends Menu implements ChangeListener
@@ -135,6 +136,8 @@ public class SettingsMenu extends Menu implements ChangeListener
 	{
 		if( e.getSource() == backButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			// save settings and return to main menu
 			MenuManager.getInstance().getSettings().writeSettings();
     		MenuManager.getInstance().changeMenu( new MainMenu() );

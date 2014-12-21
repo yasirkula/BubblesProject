@@ -93,12 +93,16 @@ public class LevelLostMenu extends Menu
 	{
 		if( e.getSource() == restartButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			// restart the current level
 			GameEngine.getInstance().initializeLevel( GameEngine.getInstance().getEpisode(), 
 					GameEngine.getInstance().getLevelID() );
 		}
 		else if( e.getSource() == exitButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
 			MenuManager.getInstance().changeMenu( new MainMenu() );
 		}
 	}

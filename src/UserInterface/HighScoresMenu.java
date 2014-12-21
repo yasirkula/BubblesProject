@@ -25,6 +25,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import GameAssets.EpisodeType;
+import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
 public class HighScoresMenu extends Menu
@@ -171,38 +172,33 @@ public class HighScoresMenu extends Menu
 	public void actionPerformed( ActionEvent e ) 
 	{
 		if( e.getSource() == backButton )
+		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
     		MenuManager.getInstance().changeMenu( new MainMenu() );
+		}
 		else if( e.getSource() == resetButton ) 
 		{
-			if( currentlyShownEpisode == EpisodeType.BIOLOGY )
-			{
-				MenuManager.getInstance().getScores().resetBioScores();
-				//showScoresOf( currentlyShownEpisode );
-			}
-			else if( currentlyShownEpisode == EpisodeType.CHEMISTRY)
-			{
-				MenuManager.getInstance().getScores().resetChemScores();
-				//showScoresOf( currentlyShownEpisode );
-			}
-			else if( currentlyShownEpisode == EpisodeType.VOCABULARY)
-			{
-				MenuManager.getInstance().getScores().resetVocabScores();
-				//showScoresOf( currentlyShownEpisode );
-			}
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
+			
+			// reset the highscores of the currently shown episode
+			MenuManager.getInstance().getScores().resetHighScores( currentlyShownEpisode );
 			
 			// refresh the highscores table
 			showScoresOf( currentlyShownEpisode );
 		}
 		else if( e.getSource() == bioScoresButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			showScoresOf( EpisodeType.BIOLOGY );
 		}
 		else if( e.getSource() == chemScoresButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			showScoresOf( EpisodeType.CHEMISTRY );
 		}
 		else if( e.getSource() == vocabScoresButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			showScoresOf( EpisodeType.VOCABULARY );
 		}
 	}

@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import GameAssets.EpisodeType;
+import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
 public class EpisodeMenu extends Menu
@@ -96,18 +97,22 @@ public class EpisodeMenu extends Menu
 	{
 		if( e.getSource() == backButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			MenuManager.getInstance().changeMenu( new MainMenu() );
 		}
 		else if( e.getSource() == bioButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			MenuManager.getInstance().changeMenu( new LevelsMenu( EpisodeType.BIOLOGY ) );
 		}
 		else if( e.getSource() == chemButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			MenuManager.getInstance().changeMenu( new LevelsMenu( EpisodeType.CHEMISTRY ) );
 		}
 		else if( e.getSource() == vocabButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			MenuManager.getInstance().changeMenu( new LevelsMenu( EpisodeType.VOCABULARY ) );
 		}
 	}

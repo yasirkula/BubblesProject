@@ -151,44 +151,52 @@ public class HighScores
 				break;
 		}
 	}
-	public void resetBioScores()
-	{
-		bioNames = new ArrayList<String>();
-		bioScores = new ArrayList<Integer>();
-		
-		for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
-		{
-			bioNames.add( "MysteriousPerson" );
-			bioScores.add( 0 );
-		}
-		saveHighScores();
-	}
-	public void resetChemScores()
-	{
-		chemNames = new ArrayList<String>();
-		chemScores = new ArrayList<Integer>();
-		
-		for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
-		{
-			chemNames.add( "MysteriousPerson" );
-			chemScores.add( 0 );
-		}
-		saveHighScores();
-	}
-	public void resetVocabScores()
-	{
-		vocabNames = new ArrayList<String>();
-		vocabScores = new ArrayList<Integer>();
-		
-		for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
-		{
-			vocabNames.add( "MysteriousPerson" );
-			vocabScores.add( 0 );
-		}
-		saveHighScores();
-	}
 	
-		
+	// reset the highscores of an episode
+	public void resetHighScores( EpisodeType episode )
+	{
+		switch( episode )
+		{
+			case BIOLOGY:
+				bioNames = new ArrayList<String>();
+				bioScores = new ArrayList<Integer>();
+				
+				for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
+				{
+					bioNames.add( "MysteriousPerson" );
+					bioScores.add( 0 );
+				}
+				
+				saveHighScores();
+				break;
+				
+			case CHEMISTRY:
+				chemNames = new ArrayList<String>();
+				chemScores = new ArrayList<Integer>();
+				
+				for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
+				{
+					chemNames.add( "MysteriousPerson" );
+					chemScores.add( 0 );
+				}
+				
+				saveHighScores();
+				break;
+				
+			case VOCABULARY:
+				vocabNames = new ArrayList<String>();
+				vocabScores = new ArrayList<Integer>();
+				
+				for( int i = 0; i < MenuManager.LEVEL_COUNT; i++ )
+				{
+					vocabNames.add( "MysteriousPerson" );
+					vocabScores.add( 0 );
+				}
+				
+				saveHighScores();
+				break;
+		}
+	}
 	
 	public void saveHighScores()
 	{

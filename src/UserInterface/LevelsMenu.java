@@ -124,7 +124,10 @@ public class LevelsMenu extends Menu
 	public void actionPerformed( ActionEvent e )
 	{
         if( e.getSource() == backButton )
+        {
+        	GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
     		MenuManager.getInstance().changeMenu( (Menu) new EpisodeMenu() );
+        }
         else
         {
         	int i = 0;
@@ -140,7 +143,13 @@ public class LevelsMenu extends Menu
         			// the level user selected is unlocked,
         			// so launch that level and hope that user enjoys
         			// their stay!
+        			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
         			GameEngine.getInstance().initializeLevel( episode, i + 1 );
+        		}
+        		else
+        		{
+        			// the level is locked
+        			GameEngine.getInstance().playSound( "sounds/levelLocked.wav" );
         		}
         	}
         }

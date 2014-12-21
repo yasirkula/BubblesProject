@@ -160,6 +160,7 @@ public class GameUI extends JPanel implements MouseMotionListener, ActionListene
 	{
 		if( e.getSource() == pauseButton )
 		{
+			GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
 			engine.pause();
 		}
 	}

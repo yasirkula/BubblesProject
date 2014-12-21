@@ -21,6 +21,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import GameManagement.GameEngine;
 import GameManagement.MenuManager;
 
 public class CreditsMenu extends Menu
@@ -95,7 +96,10 @@ public class CreditsMenu extends Menu
     public void actionPerformed( ActionEvent e )
     {
     	if( e.getSource() == backButton )
+    	{
+    		GameEngine.getInstance().playSound( "sounds/buttonClick.wav" );
     		MenuManager.getInstance().changeMenu( (Menu) new MainMenu() );
+    	}
     }
     // END OF OTHER METHODS                            
 }
