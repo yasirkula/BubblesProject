@@ -407,6 +407,31 @@ public class GameEngine implements ActionListener, MouseListener
 			}
 		}
 	}
+	
+	public static synchronized void playSound( final String url ) 
+	{
+		// inspired from: http://stackoverflow.com/questions/20354508/sound-effects-in-java
+		// answered by: Batuhan Bardak
+		// plays an audio clip synchronously
+		new Thread( new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
+					AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+							new File( url ) );
+					Clip clip = AudioSystem.getClip();
+					clip.open( inputStream );
+					clip.start(); 
+				} 
+				catch( Exception e ) 
+				{
+					System.out.println( e.getMessage() );
+				}
+			}
+		} ).start();
+	}
 	// END OF OTHER METHODS
 
 	// INTERFACE METHODS
@@ -481,28 +506,4 @@ public class GameEngine implements ActionListener, MouseListener
 	public void mouseExited( MouseEvent e ){}
 	public void mouseReleased( MouseEvent e ){}
 	// END OF INTERFACE METHODS
-	
-	public static synchronized void playSound( final String url ) 
-	{
-		new Thread( new Runnable() 
-		{
-			// The wrapper thread is unnecessary, unless it blocks on the
-			// Clip finishing; see comments.
-			public void run() 
-			{
-				try 
-				{
-					AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-							new File( url ) );
-					Clip clip = AudioSystem.getClip();
-					clip.open( inputStream );
-					clip.start(); 
-				} 
-				catch( Exception e ) 
-				{
-					System.out.println( e.getMessage() );
-				}
-			}
-		} ).start();
-	}
 }
