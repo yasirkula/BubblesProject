@@ -1,9 +1,3 @@
-/**
- * EpisodeMenu - Draws episodes as clickable buttons
- * 
- * @author CS319 - Section 2 - Group 9
- */
-
 package UserInterface;
 
 import java.awt.BorderLayout;
@@ -18,7 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import GameAssets.EpisodeType;
 import GameManagement.MenuManager;
 
 public class EpisodeMenu extends Menu
@@ -47,8 +40,6 @@ public class EpisodeMenu extends Menu
 		middlePanel.add( chemButton );
 		middlePanel.add( vocabButton );
 		
-		// put some white space at the edges so that interface
-		// looks nicer
 		Dimension gap = new Dimension( 25, 25 );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.PAGE_START );
 		add( new Box.Filler( gap, gap, gap ), BorderLayout.LINE_START );
@@ -101,17 +92,17 @@ public class EpisodeMenu extends Menu
 		else if( e.getSource() == bioButton )
 		{
 			MenuManager.getInstance().changeMenu( 
-					new LevelsMenu( EpisodeType.BIOLOGY, MenuManager.LEVEL_COUNT, 4 ) );
+					new LevelsMenu( "Biology", MenuManager.LEVEL_COUNT, MenuManager.LEVEL_COUNT - MenuManager.getInstance().getSettings().lockedLevelNumberForBio ) );
 		}
 		else if( e.getSource() == chemButton )
 		{
 			MenuManager.getInstance().changeMenu( 
-					new LevelsMenu( EpisodeType.CHEMISTRY, MenuManager.LEVEL_COUNT, 7 ) );
+					new LevelsMenu( "Chemistry", MenuManager.LEVEL_COUNT,  MenuManager.LEVEL_COUNT - MenuManager.getInstance().getSettings().lockedLevelNumberForChem ) );
 		}
 		else if( e.getSource() == vocabButton )
 		{
 			MenuManager.getInstance().changeMenu( 
-					new LevelsMenu( EpisodeType.VOCABULARY, MenuManager.LEVEL_COUNT, MenuManager.LEVEL_COUNT ) );
+					new LevelsMenu( "Vocabulary", MenuManager.LEVEL_COUNT,  MenuManager.LEVEL_COUNT - MenuManager.getInstance().getSettings().lockedLevelNumberForVocab ) );
 		}
 	}
 	// END OF OTHER METHODS
