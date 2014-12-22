@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import GameAssets.EpisodeType;
+import GameManagement.MenuManager;
 
 public class SettingsManager
 {
@@ -34,9 +35,9 @@ public class SettingsManager
 		// load default values and then try to fetch values from database
 		soundLevel = 1f;
 		backgroundColor = Color.white;
-		lockedLevelNumberForBio = 0;
-		lockedLevelNumberForChem = 0;
-		lockedLevelNumberForVocab = 0;
+		lockedLevelNumberForBio = MenuManager.LEVEL_COUNT - 1;
+		lockedLevelNumberForChem = MenuManager.LEVEL_COUNT - 1;
+		lockedLevelNumberForVocab = MenuManager.LEVEL_COUNT - 1;
 
 		loadSettings();
 	}
