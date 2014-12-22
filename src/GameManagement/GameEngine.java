@@ -274,7 +274,8 @@ public class GameEngine implements ActionListener, MouseListener
 
 		if( episode == EpisodeType.VOCABULARY )
 		{
-			if( settings.getLockedLevelNumber( EpisodeType.VOCABULARY ) > 0 )
+			if( settings.getLockedLevelNumber( EpisodeType.VOCABULARY ) > 0 &&
+				levelID == MenuManager.LEVEL_COUNT - settings.getLockedLevelNumber( EpisodeType.VOCABULARY ) )
 			{
 				settings.setLockedLevelNumber( EpisodeType.VOCABULARY, 
 						settings.getLockedLevelNumber( EpisodeType.VOCABULARY ) - 1 );
@@ -282,7 +283,8 @@ public class GameEngine implements ActionListener, MouseListener
 		}
 		else if( episode == EpisodeType.BIOLOGY )
 		{
-			if( settings.getLockedLevelNumber( EpisodeType.BIOLOGY ) > 0 )
+			if( settings.getLockedLevelNumber( EpisodeType.BIOLOGY ) > 0 &&
+				levelID == MenuManager.LEVEL_COUNT - settings.getLockedLevelNumber( EpisodeType.BIOLOGY ) )
 			{
 				settings.setLockedLevelNumber( EpisodeType.BIOLOGY, 
 						settings.getLockedLevelNumber( EpisodeType.BIOLOGY ) - 1 );
@@ -290,7 +292,8 @@ public class GameEngine implements ActionListener, MouseListener
 		}
 		else
 		{
-			if( settings.getLockedLevelNumber( EpisodeType.CHEMISTRY ) > 0 )
+			if( settings.getLockedLevelNumber( EpisodeType.CHEMISTRY ) > 0 &&
+				levelID == MenuManager.LEVEL_COUNT - settings.getLockedLevelNumber( EpisodeType.CHEMISTRY ) )
 			{
 				settings.setLockedLevelNumber( EpisodeType.CHEMISTRY, 
 						settings.getLockedLevelNumber( EpisodeType.CHEMISTRY ) - 1 );
