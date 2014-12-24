@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 public class Bubble
 {
@@ -75,6 +76,12 @@ public class Bubble
 	{
 		// returns the center point of the bubble on screen
 		return new Point( xPos + RADIUS, yPos + RADIUS );
+	}
+	
+	public void setLocation( Point2D p )
+	{
+		xPos = (int) p.getX();
+		yPos = (int) p.getY();
 	}
 	
 	public void setLocation( int x, int y )

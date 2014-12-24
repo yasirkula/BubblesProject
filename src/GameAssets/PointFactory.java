@@ -22,46 +22,17 @@
 package GameAssets;
 
 import java.awt.Point;
-import java.util.ArrayList;
 
-import Driver.Driver;
-
-public class PointFactory 
+public class PointFactory extends Point2DFactory
 {
-	// VARIABLES
-	private int diameter;
-	private int alignmentSpace;
-	private int horizCellCount;
-	private int vertCellCount;
-	private int cellCount;
-	private ArrayList<Integer> freeBubbleCells;
-	// END OF VARIABLES
-	
 	// CONSTRUCTORS
 	public PointFactory()
 	{
-		// Initialize the variables
-		diameter = (int)( 2 * Bubble.getRadius() );
-		alignmentSpace = 2 * diameter;
-		horizCellCount = Driver.getFrameWidth() / alignmentSpace;
-		vertCellCount = Driver.getFrameHeight() / alignmentSpace;
-		cellCount = horizCellCount * vertCellCount;
+		super();
 	}
 	// END OF CONSTRUCTORS
 	
 	// OTHER METHODS
-	public void initialize()
-	{
-		// Initialize the grids. After this function is called,
-		// each grid is considered empty. So, this function is
-		// called each time a level is loaded
-		freeBubbleCells = new ArrayList<Integer>();
-		for( int i = 0; i < cellCount; i++ )
-		{
-			freeBubbleCells.add( i );
-		}
-	}
-	
 	public Point getRandomBubblePosition()
 	{
 		// selects a random cell and returns it position as Point
@@ -104,23 +75,6 @@ public class PointFactory
 		}
 		
 		return new Point( xPos, yPos );
-	}
-	
-	public void freeCell( Point position )
-	{
-		// this function is called whenever a bubble is destroyed runtime
-		// it frees the cell bubble was inside so that this cell can be
-		// used again
-		int x = position.x;
-		int y = position.y;
-		
-		int row = y / alignmentSpace;
-		int col = x / alignmentSpace;
-		
-		int cellIndex = row * horizCellCount + col;
-		
-		if( !freeBubbleCells.contains( cellIndex ) )
-			freeBubbleCells.add( cellIndex );
 	}
 	// END OF OTHER METHODS
 }

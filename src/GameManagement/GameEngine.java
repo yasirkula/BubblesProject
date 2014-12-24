@@ -9,11 +9,11 @@
 package GameManagement;
 
 import java.util.ArrayList;
-import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 import java.io.File;
 
 import javax.sound.sampled.AudioInputStream;
@@ -24,6 +24,7 @@ import javax.swing.Timer;
 
 import GameAssets.Bubble;
 import GameAssets.EpisodeType;
+import GameAssets.Point2DFactory;
 import GameAssets.PointFactory;
 import Database.SettingsManager;
 import Database.BubbleCollection;
@@ -60,7 +61,7 @@ public class GameEngine implements ActionListener, MouseListener
 	private Bubble selectedBubble;
 	private SettingsManager settings;
 	private BubbleCollection bubbleCollection;
-	private PointFactory bubblePositionFactory;
+	private Point2DFactory bubblePositionFactory;
 	private GameUI UI;
 	// END OF VARIABLES
 
@@ -214,8 +215,8 @@ public class GameEngine implements ActionListener, MouseListener
 		// reposition all the bubbles inside the bubbles ArrayList randomly
 		for( Bubble b : bubbles )
 		{
-			Point p = bubblePositionFactory.getRandomBubblePosition();
-			b.setLocation( p.x, p.y );
+			Point2D p = bubblePositionFactory.getRandomBubblePosition();
+			b.setLocation( p );
 		}
 
 		// only one matching bubble will be on screen at the beginning
@@ -231,8 +232,8 @@ public class GameEngine implements ActionListener, MouseListener
 		{
 			if( i == randomIndex )
 			{
-				Point p = bubblePositionFactory.getRandomBubblePosition();
-				matchingBubbles.get( i ).setLocation( p.x, p.y );
+				Point2D p = bubblePositionFactory.getRandomBubblePosition();
+				matchingBubbles.get( i ).setLocation( p );
 			}
 			else
 			{
@@ -243,8 +244,8 @@ public class GameEngine implements ActionListener, MouseListener
 		// reposition all the bubbles inside the trapBubbles ArrayList randomly
 		for( Bubble b : trapBubbles )
 		{
-			Point p = bubblePositionFactory.getRandomBubblePosition();
-			b.setLocation( p.x, p.y );
+			Point2D p = bubblePositionFactory.getRandomBubblePosition();
+			b.setLocation( p );
 		}
 	}
 
@@ -362,8 +363,8 @@ public class GameEngine implements ActionListener, MouseListener
 						{
 							// otherwise pop a new matching bubble
 							int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
-							Point p = bubblePositionFactory.getRandomBubblePosition();
-							matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
+							Point2D p = bubblePositionFactory.getRandomBubblePosition();
+							matchingBubbles.get( randomBubbleIndex ).setLocation( p );
 						}
 					}
 					else
@@ -403,8 +404,8 @@ public class GameEngine implements ActionListener, MouseListener
 							{
 								// otherwise pop a new matching bubble
 								int randomBubbleIndex = (int)( Math.random() * matchingBubbles.size() );
-								Point p = bubblePositionFactory.getRandomBubblePosition();
-								matchingBubbles.get( randomBubbleIndex ).setLocation( p.x, p.y );
+								Point2D p = bubblePositionFactory.getRandomBubblePosition();
+								matchingBubbles.get( randomBubbleIndex ).setLocation( p );
 							}
 						}
 						else
